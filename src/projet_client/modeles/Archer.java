@@ -1,5 +1,7 @@
 package projet_client.modeles;
 
+import projet_client.input.Keyboard;
+
 public class Archer extends Entity{
 
     private String name;
@@ -9,12 +11,16 @@ public class Archer extends Entity{
     private int direction;
     private int scale = 1;
 
-    public Archer(String name, int speed, int x, int y, int life) {
+    private Keyboard keyboard;
+
+    public Archer(String name, int speed, int x, int y, int life, Keyboard keyboard) {
         this.name = name;
         this.speed = speed;
         this.x = x;
         this.y = y;
         this.life = life;
+
+        this.keyboard = keyboard;
     }
 
     public void move(int x, int y) {
@@ -41,6 +47,20 @@ public class Archer extends Entity{
 
     @Override
     public void update() {
+        int xPrime = 0;
+        int yPrime = 0;
+
+        if(keyboard.getUp().isPressed()) yPrime--;
+        if(keyboard.getDown().isPressed()) yPrime++;
+        if(keyboard.getLeft().isPressed()) xPrime--;
+        if(keyboard.getRight().isPressed()) xPrime++;
+
+        if (xPrime != 0 || yPrime != 0) {
+            move(xPrime, yPrime);
+            this.isMooving = true;
+        } else {
+            this.isMooving = false;
+        }
 
     }
 
