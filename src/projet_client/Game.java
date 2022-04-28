@@ -93,7 +93,11 @@ public class Game extends Canvas implements Runnable {
 
             if (shouldRender) {
                 frames++;
-                this.render();
+                try {
+                    this.render();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (System.currentTimeMillis() - timer >= 1000) {
@@ -114,7 +118,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void render() {
+    public void render() throws IOException {
         BufferStrategy bs = this.getBufferStrategy();
 
         if (bs == null) {
@@ -124,12 +128,13 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
 
-        // Dessine l'image de fond
-        g.setColor(Color.BLACK); // Couleur de fond en noir
-        g.fillRect(0, 0, getWidth(), getHeight()); // Remplit l'image de fond en noir
-
+        Sprite sprite = new Sprite("Background.png");
+        //final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("background.png"));
+        this.pixels = sprite.getPixels();
+        imageBackground = sprite.getImage();
         g.drawImage(imageBackground, 0, 0, getWidth(), getHeight(), null); // Dessine l'image de fond
-
+        //g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+        sprite.closeImage();
         g.dispose(); // Libère la mémoire
         bs.show(); // Affiche l'image de fond
     }

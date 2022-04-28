@@ -10,11 +10,14 @@ public class Sprite {
     private int width;
     private int height;
 
-    public int[] pixels;
+    private int[] pixels;
+
+    private BufferedImage image;
 
 
     public Sprite(String path) throws IOException {
-        BufferedImage image = ImageIO.read(Sprite.class.getResourceAsStream(path));
+
+        this.image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("Background.png"));
 
         if (image == null) {
             throw new IOException("Impossible de charge l'image");
@@ -26,10 +29,11 @@ public class Sprite {
 
         pixels = image.getRGB(0, 0, width, height, null, 0, width);
 
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = (pixels[i] & 0xff) / 64;
-        }
 
+    }
+
+    public void closeImage() {
+    	image.flush();
     }
 
     public String getPath() {
@@ -43,6 +47,16 @@ public class Sprite {
     public int getHeight() {
         return height;
     }
+
+    public int[] getPixels() {
+        return pixels;
+    }
+
+    public BufferedImage getImage() {
+    	return this.image;
+    }
+
+
 
 
 }
