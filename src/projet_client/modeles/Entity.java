@@ -5,5 +5,5 @@ public abstract class Entity {
 
     public abstract void update();
     public abstract void render();
-    public abstract void gestionCollision();
+    public abstract boolean gestionCollision(int x, int y);
 }

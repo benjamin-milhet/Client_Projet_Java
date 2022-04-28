@@ -1,6 +1,8 @@
 package projet_client;
 
 import projet_client.graphics.Sprite;
+import projet_client.input.Key;
+import projet_client.input.Keyboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +28,7 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) imageBackground.getRaster().getDataBuffer()).getData();
 
     private Sprite sprite = new Sprite("/Background.png");
+    private Keyboard keyboard;
 
     public Game() throws IOException {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -42,6 +45,8 @@ public class Game extends Canvas implements Runnable {
         this.frame.pack();
 
         this.frame.setVisible(true);
+
+        this.keyboard = new Keyboard(this);
     }
 
     public synchronized void start() {
