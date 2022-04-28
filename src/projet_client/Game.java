@@ -96,7 +96,6 @@ public class Game extends Canvas implements Runnable {
                 try {
                     this.render();
                 } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
 
@@ -134,7 +133,6 @@ public class Game extends Canvas implements Runnable {
         imageBackground = sprite.getImage();
         g.drawImage(imageBackground, 0, 0, getWidth(), getHeight(), null); // Dessine l'image de fond
         //g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
-        sprite.closeImage();
         g.dispose(); // Libère la mémoire
         bs.show(); // Affiche l'image de fond
     }

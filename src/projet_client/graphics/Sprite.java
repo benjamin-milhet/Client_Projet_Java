@@ -6,20 +6,20 @@ import java.io.IOException;
 
 public class Sprite {
 
-    private String path;
-    private int width;
-    private int height;
+    private final String path;
+    private final int width;
+    private final int height;
 
     private int[] pixels;
 
-    private BufferedImage image;
+    private final BufferedImage image;
 
 
     public Sprite(String path) throws IOException {
 
         this.image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("Background.png"));
 
-        if (image == null) {
+        if (this.image == null) {
             throw new IOException("Impossible de charge l'image");
         }
 
@@ -30,10 +30,6 @@ public class Sprite {
         pixels = image.getRGB(0, 0, width, height, null, 0, width);
 
 
-    }
-
-    public void closeImage() {
-    	image.flush();
     }
 
     public String getPath() {
