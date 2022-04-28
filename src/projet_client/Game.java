@@ -1,10 +1,13 @@
 package projet_client;
 
+import projet_client.graphics.Sprite;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -22,8 +25,9 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage imageBackground = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) imageBackground.getRaster().getDataBuffer()).getData();
 
+    private Sprite sprite = new Sprite("/Background.png");
 
-    public Game() {
+    public Game() throws IOException {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         this.frame = new JFrame(NAME); // Création de la fenêtre avec le titre "Operation : Ninja"
 
@@ -132,7 +136,7 @@ public class Game extends Canvas implements Runnable {
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Game game = new Game();
         game.start();
     }
