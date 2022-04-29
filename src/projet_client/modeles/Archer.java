@@ -63,8 +63,8 @@ public class Archer extends Entity{
         int xPrime = 0;
         int yPrime = 0;
 
-        if (keyboard.getUp().isPressed()) yPrime--;
-        if (keyboard.getDown().isPressed()) yPrime++;
+        //if (keyboard.getUp().isPressed()) yPrime--;
+        //if (keyboard.getDown().isPressed()) yPrime++;
         if (keyboard.getLeft().isPressed()) xPrime--;
         if (keyboard.getRight().isPressed()) xPrime++;
 
