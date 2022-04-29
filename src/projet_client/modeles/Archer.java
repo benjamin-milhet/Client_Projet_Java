@@ -1,6 +1,10 @@
 package projet_client.modeles;
 
+import projet_client.graphics.Sprite;
 import projet_client.input.Keyboard;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Archer extends Entity{
 
@@ -9,7 +13,11 @@ public class Archer extends Entity{
     private boolean isMooving;
     private int life;
     private int direction;
-    private int scale = 1;
+    private int scale = 3;
+
+    private float compteurIdle;
+
+    private BufferedImage[] idle;
 
     private Keyboard keyboard;
 
@@ -21,6 +29,10 @@ public class Archer extends Entity{
         this.life = life;
 
         this.keyboard = keyboard;
+
+        this.idle = new BufferedImage[10];
+        this.getArcherImages();
+        this.compteurIdle = 0;
     }
 
     public void move(int x, int y) {
@@ -43,6 +55,7 @@ public class Archer extends Entity{
                 this.y += y * this.speed;
             }
         }
+        System.out.println("x : " + this.x + " y : " + this.y);
     }
 
     @Override
@@ -64,8 +77,13 @@ public class Archer extends Entity{
     }
 
     @Override
-    public void render() {
-
+    public void render(Graphics g) {
+        BufferedImage image = this.idle[Math.round(this.compteurIdle)];
+        g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+        this.compteurIdle+=0.3;
+        if(this.compteurIdle >= 9){
+            this.compteurIdle = 0;
+        }
     }
 
     @Override
@@ -75,6 +93,17 @@ public class Archer extends Entity{
 
     public String getName() {
         return name;
+    }
+
+    public void getArcherImages(){
+        try {
+            for (int i = 0; i < 10; i++) {
+                Sprite sprite = new Sprite("archer/tile00" + i + ".png");
+                this.idle[i] = sprite.getImage();
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors du chargement des images de l'archer");
+        }
     }
 
 }

@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage imageBackground = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt) imageBackground.getRaster().getDataBuffer()).getData();
 
-    private Sprite sprite = new Sprite("/Background.png");
+    private Sprite sprite;
     private Keyboard keyboard;
     private Archer archer;
 
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable {
         this.frame.setVisible(true);
 
         this.keyboard = new Keyboard(this);
-        this.archer = new Archer("archer", 1, 0,0,3, this.keyboard);
+        this.archer = new Archer("archer", 5, 310,670,3, this.keyboard);
     }
 
     public synchronized void start() {
@@ -121,7 +121,7 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         this.tickCount++;
-        archer.update();
+        this.archer.update();
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = i + tickCount;
@@ -139,11 +139,13 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
 
         Sprite sprite = new Sprite("Background.png");
-        //final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("background.png"));
+
         this.pixels = sprite.getPixels();
         imageBackground = sprite.getImage();
         g.drawImage(imageBackground, 0, 0, getWidth(), getHeight(), null); // Dessine l'image de fond
-        //g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+
+        this.archer.render(g);
+
         g.dispose(); // Libère la mémoire
         bs.show(); // Affiche l'image de fond
     }

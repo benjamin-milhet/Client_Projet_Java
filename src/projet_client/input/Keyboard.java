@@ -33,12 +33,12 @@ public class Keyboard implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        pressedOnKey(e.getKeyCode(), true);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        pressedOnKey(e.getKeyCode(), false);
     }
 
     public void pressedOnKey(int keyCode, boolean isPressed) {

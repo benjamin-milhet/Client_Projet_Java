@@ -17,7 +17,7 @@ public class Sprite {
 
     public Sprite(String path) throws IOException {
 
-        this.image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("Background.png"));
+        this.image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
 
         if (this.image == null) {
             throw new IOException("Impossible de charge l'image");
