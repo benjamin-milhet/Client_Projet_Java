@@ -50,10 +50,10 @@ public class Archer extends Entity{
         int xPrime = 0;
         int yPrime = 0;
 
-        if(keyboard.getUp().isPressed()) yPrime--;
-        if(keyboard.getDown().isPressed()) yPrime++;
-        if(keyboard.getLeft().isPressed()) xPrime--;
-        if(keyboard.getRight().isPressed()) xPrime++;
+        if (keyboard.getUp().isPressed()) yPrime--;
+        if (keyboard.getDown().isPressed()) yPrime++;
+        if (keyboard.getLeft().isPressed()) xPrime--;
+        if (keyboard.getRight().isPressed()) xPrime++;
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
@@ -61,7 +61,6 @@ public class Archer extends Entity{
         } else {
             this.isMooving = false;
         }
-
     }
 
     @Override

@@ -3,6 +3,7 @@ package projet_client;
 import projet_client.graphics.Sprite;
 import projet_client.input.Key;
 import projet_client.input.Keyboard;
+import projet_client.modeles.Archer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 
     private Sprite sprite = new Sprite("/Background.png");
     private Keyboard keyboard;
+    private Archer archer;
 
     public Game() throws IOException {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -47,6 +49,7 @@ public class Game extends Canvas implements Runnable {
         this.frame.setVisible(true);
 
         this.keyboard = new Keyboard(this);
+        this.archer = new Archer("archer", 1, 0,0,3, this.keyboard);
     }
 
     public synchronized void start() {
@@ -74,6 +77,8 @@ public class Game extends Canvas implements Runnable {
 
         long timer = System.currentTimeMillis();
         double delta = 0;
+
+
 
 
         while (running) {
@@ -116,6 +121,7 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         this.tickCount++;
+        archer.update();
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = i + tickCount;
