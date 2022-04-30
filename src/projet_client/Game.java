@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
                 frames++;
                 try {
                     this.render();
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                 }
             }
 
@@ -128,7 +128,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void render() throws IOException {
+    public void render() throws IOException, InterruptedException {
         BufferStrategy bs = this.getBufferStrategy();
 
         if (bs == null) {

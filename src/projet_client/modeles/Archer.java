@@ -12,12 +12,15 @@ public class Archer extends Entity{
     private int speed;
     private boolean isMooving;
     private int life;
-    private int direction;
+    private String direction;
     private int scale = 3;
 
     private float compteurIdle;
+    private float compteurAttack;
+    private float compteurjump;
+    private float compteurRun;
 
-    private BufferedImage[] idle;
+    private BufferedImage[] idle, attack, jump, run, dead;
 
     private Keyboard keyboard;
 
@@ -27,12 +30,21 @@ public class Archer extends Entity{
         this.x = x;
         this.y = y;
         this.life = life;
+        this.direction = "idle";
 
         this.keyboard = keyboard;
 
         this.idle = new BufferedImage[10];
+        this.attack = new BufferedImage[6];
+        this.jump = new BufferedImage[4];
+        this.run = new BufferedImage[8];
+
         this.getArcherImages();
+
         this.compteurIdle = 0;
+        this.compteurAttack = 0;
+        this.compteurjump = 0;
+        this.compteurRun = 0;
     }
 
     public void move(int x, int y) {
@@ -41,21 +53,10 @@ public class Archer extends Entity{
             move(0, y);
         } else {
             if(!this.gestionCollision(x,y)){
-                if (x > 0) {
-                    this.direction = 0;
-                } else if (x < 0) {
-                    this.direction = 1;
-                } else if (y > 0) {
-                    this.direction = 2;
-                } else if (y < 0) {
-                    this.direction = 3;
-                }
-
                 this.x += x * this.speed;
                 this.y += y * this.speed;
             }
         }
-        System.out.println("x : " + this.x + " y : " + this.y);
     }
 
     @Override
@@ -63,26 +64,72 @@ public class Archer extends Entity{
         int xPrime = 0;
         int yPrime = 0;
 
-        //if (keyboard.getUp().isPressed()) yPrime--;
-        //if (keyboard.getDown().isPressed()) yPrime++;
-        if (keyboard.getLeft().isPressed()) xPrime--;
-        if (keyboard.getRight().isPressed()) xPrime++;
+        if (keyboard.getUp().isPressed()) {
+            yPrime--;
+            this.direction = "up";
+        }
+        if (keyboard.getDown().isPressed()) {
+            yPrime++;
+            this.direction = "down";
+        }
+        if (keyboard.getLeft().isPressed()) {
+            xPrime--;
+            this.direction = "left";
+        }
+        if (keyboard.getRight().isPressed()) {
+            xPrime++;
+            this.direction = "right";
+        }
 
         if (xPrime != 0 || yPrime != 0) {
-            move(xPrime, yPrime);
+            move(xPrime, 0);
             this.isMooving = true;
         } else {
             this.isMooving = false;
+            //this.direction = "idle";
         }
     }
 
     @Override
-    public void render(Graphics g) {
-        BufferedImage image = this.idle[Math.round(this.compteurIdle)];
-        g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
-        this.compteurIdle+=0.3;
-        if(this.compteurIdle >= 9){
-            this.compteurIdle = 0;
+    public void render(Graphics g){
+
+        if (this.direction == "idle") {
+            BufferedImage image = this.idle[Math.round(this.compteurIdle)];
+            g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+            this.compteurIdle+=0.3;
+            if(this.compteurIdle >= 9){
+                this.compteurIdle = 0;
+            }
+        } else {
+            if (this.direction == "down") {
+                BufferedImage image = this.attack[Math.round(this.compteurAttack)];
+                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                this.compteurAttack+=0.2;
+                if(this.compteurAttack >= 5){
+                    this.compteurAttack = 0;
+                    this.direction = "idle";
+                }
+
+            } else if (this.direction == "right") {
+                BufferedImage image = this.idle[0];
+                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                this.direction = "idle";
+
+            } else if (this.direction == "left") {
+                BufferedImage image = this.idle[0];
+                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                this.direction = "idle";
+
+            } else if (this.direction == "up") {
+                BufferedImage image = this.jump[Math.round(this.compteurjump)];
+                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+
+                this.compteurjump += 0.2;
+                if(this.compteurjump >= 3){
+                    this.compteurjump = 0;
+                    this.direction = "idle";
+                }
+            }
         }
     }
 
@@ -97,10 +144,23 @@ public class Archer extends Entity{
 
     public void getArcherImages(){
         try {
-            for (int i = 0; i < 10; i++) {
-                Sprite sprite = new Sprite("archer/tile00" + i + ".png");
-                this.idle[i] = sprite.getImage();
+            for (int i = 0; i < this.idle.length; i++) {
+                Sprite archer = new Sprite("archer/idle/tile00" + i + ".png");
+                this.idle[i] = archer.getImage();
             }
+            for (int i = 0; i < this.attack.length; i++) {
+                Sprite attack = new Sprite("archer/attack/tile00" + i + ".png");
+                this.attack[i] = attack.getImage();
+            }
+            for (int i = 0; i < this.jump.length; i++) {
+                Sprite jump = new Sprite("archer/jump/tile00" + i + ".png");
+                this.jump[i] = jump.getImage();
+            }
+            for (int i = 0; i < this.run.length; i++) {
+                Sprite run = new Sprite("archer/run/tile00" + i + ".png");
+                this.run[i] = run.getImage();
+            }
+
         } catch (Exception e) {
             System.out.println("Erreur lors du chargement des images de l'archer");
         }
