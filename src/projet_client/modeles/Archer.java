@@ -48,10 +48,7 @@ public class Archer extends Entity{
     }
 
     public void move(int x, int y) {
-        if (x != 0 && y != 0) { // Permet de ne pas se deplacer en diagonal
-            move(x, 0);
-            move(0, y);
-        } else {
+        if (!(x != 0 && y != 0)) { // Permet de ne pas se deplacer en diagonal
             if(!this.gestionCollision(x,y)){
                 this.x += x * this.speed;
                 this.y += y * this.speed;
@@ -71,24 +68,31 @@ public class Archer extends Entity{
             }
         }
 
-        if (keyboard.getUp().isPressed()) {
-            yPrime = -3;
-            this.direction = "up";
-            this.compteurjump = 0;
+        if(this.compteurjump == 0 && this.compteurAttack == 0){
+            if (keyboard.getUp().isPressed()) {
+                yPrime = -20;
+                this.direction = "up";
+                this.compteurjump = 0;
+            }
+
+            if (keyboard.getDown().isPressed()) {
+                //yPrime++;
+                this.direction = "down";
+                this.compteurAttack = 0;
+            }
+
+            if (keyboard.getLeft().isPressed()) {
+                xPrime--;
+                this.direction = "left";
+            }
+
+            if (keyboard.getRight().isPressed()) {
+                xPrime++;
+                this.direction = "right";
+            }
         }
-        if (keyboard.getDown().isPressed()) {
-            //yPrime++;
-            this.direction = "down";
-            this.compteurAttack = 0;
-        }
-        if (keyboard.getLeft().isPressed()) {
-            xPrime--;
-            this.direction = "left";
-        }
-        if (keyboard.getRight().isPressed()) {
-            xPrime++;
-            this.direction = "right";
-        }
+
+
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
