@@ -22,6 +22,7 @@ public class Fleche extends Entity {
         this.speed = speed;
         this.x = x;
         this.y = y;
+        System.out.println(this.x + " " + this.y);
 
         this.direction = direction;
 
@@ -48,7 +49,7 @@ public class Fleche extends Entity {
         int yPrime = 0;
 
         if(this.direction.equals("right")){
-            xPrime++;
+            xPrime = 1 * this.speed;
         }
 
         if (xPrime != 0 || yPrime != 0) {
