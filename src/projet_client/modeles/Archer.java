@@ -64,6 +64,15 @@ public class Archer extends Entity{
 
     @Override
     public void update() {
+
+        ArrayList<Fleche> lastFleches = new ArrayList<>();
+        for(Fleche f : this.fleches){
+            if (f.getLife() > 0){
+                lastFleches.add(f);
+            }
+        }
+        this.fleches = lastFleches;
+
         for (int i = 0; i < this.fleches.size(); i++) {
             this.fleches.get(i).update();
         }
@@ -136,7 +145,7 @@ public class Archer extends Entity{
                     this.compteurAttack = 0;
                     this.direction = "idle";
 
-                    Fleche fleche = new Fleche(3, this.x+180, this.y+125, this.keyboard, "right");
+                    Fleche fleche = new Fleche(4, this.x+180, this.y+125, this.keyboard, "right");
                     this.fleches.add(fleche);
                 }
 

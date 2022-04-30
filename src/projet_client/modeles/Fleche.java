@@ -12,8 +12,10 @@ public class Fleche extends Entity {
     private boolean isMooving;
     private String direction;
     private int scale = 3;
+    private int life;
 
     private float compteurFleche;
+    private int compteurYPrime;
 
     private BufferedImage[] fleche;
     private Keyboard keyboard;
@@ -22,7 +24,7 @@ public class Fleche extends Entity {
         this.speed = speed;
         this.x = x;
         this.y = y;
-        System.out.println(this.x + " " + this.y);
+        this.life = 1;
 
         this.direction = direction;
 
@@ -32,15 +34,16 @@ public class Fleche extends Entity {
         this.getArcherImages();
 
         this.compteurFleche = 0;
+        this.compteurYPrime = 0;
     }
 
     public void move(int x, int y) {
-        if (!(x != 0 && y != 0)) { // Permet de ne pas se deplacer en diagonal
-            if(!this.gestionCollision(x,y)){
-                this.x += x * this.speed;
-                this.y += y * this.speed;
-            }
+
+        if(!this.gestionCollision(x,y)){
+            this.x += x * this.speed;
+            this.y += y * this.speed;
         }
+
     }
 
     @Override
@@ -50,6 +53,12 @@ public class Fleche extends Entity {
 
         if(this.direction.equals("right")){
             xPrime = 1 * this.speed;
+            this.compteurYPrime++;
+            if (this.compteurYPrime >= 3) {
+                this.compteurYPrime = 0;
+                yPrime ++;
+            }
+
         }
 
         if (xPrime != 0 || yPrime != 0) {
@@ -72,7 +81,15 @@ public class Fleche extends Entity {
 
     @Override
     public boolean gestionCollision(int x, int y) {
-        return false;
+        boolean res = false;
+        System.out.println("x : " + this.x + " y : " + (this.y+y));
+        if(this.x + x < 0 || this.x + x > 1750 || this.y + y < 0 || this.y + y > 860){
+            System.out.println("Collision avec la map");
+            this.compteurYPrime = 0;
+            res = true;
+            this.life--;
+        }
+        return res;
     }
 
     public void getArcherImages(){
@@ -85,5 +102,9 @@ public class Fleche extends Entity {
         } catch (Exception e) {
             System.out.println("Erreur lors du chargement des images de l'archer");
         }
+    }
+
+    public int getLife(){
+        return this.life;
     }
 }
