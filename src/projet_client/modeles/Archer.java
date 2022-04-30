@@ -52,7 +52,6 @@ public class Archer extends Entity{
             if(!this.gestionCollision(x,y)){
                 this.x += x * this.speed;
                 this.y += y * this.speed;
-
             }
         }
     }
@@ -62,37 +61,39 @@ public class Archer extends Entity{
         int xPrime = 0;
         int yPrime = 0;
 
+
         if(this.compteurjump < 0.2){
             if (this.y < 670) {
                 this.y = 670;
             }
         }
 
-        if(this.compteurjump == 0 && this.compteurAttack == 0){
-            if (keyboard.getUp().isPressed()) {
-                yPrime = -20;
+        if(this.compteurjump == 0 && this.compteurAttack == 0 && this.y == 670){
+
+            this.direction = "idle";
+
+            if (this.keyboard.getUp().isPressed()) {
+                yPrime = -30;
                 this.direction = "up";
                 this.compteurjump = 0;
             }
 
-            if (keyboard.getDown().isPressed()) {
+            if (this.keyboard.getDown().isPressed()) {
                 //yPrime++;
                 this.direction = "down";
                 this.compteurAttack = 0;
             }
 
-            if (keyboard.getLeft().isPressed()) {
+            if (this.keyboard.getLeft().isPressed()) {
                 xPrime--;
                 this.direction = "left";
             }
 
-            if (keyboard.getRight().isPressed()) {
+            if (this.keyboard.getRight().isPressed()) {
                 xPrime++;
                 this.direction = "right";
             }
         }
-
-
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
@@ -101,8 +102,6 @@ public class Archer extends Entity{
             this.isMooving = false;
             //this.direction = "idle";
         }
-
-
     }
 
     @Override
@@ -126,15 +125,20 @@ public class Archer extends Entity{
                 }
 
             } else if (this.direction == "right") {
-                BufferedImage image = this.idle[0];
+                BufferedImage image = this.run[Math.round(this.compteurRun)];
                 g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
-                this.direction = "idle";
-
+                this.compteurRun+=0.2;
+                if(this.compteurRun >= 7){
+                    this.compteurRun = 0;
+                }
 
             } else if (this.direction == "left") {
-                BufferedImage image = this.idle[0];
+                BufferedImage image = this.run[Math.round(this.compteurRun)];
                 g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
-                this.direction = "idle";
+                this.compteurRun+=0.2;
+                if(this.compteurRun >= 7){
+                    this.compteurRun = 0;
+                }
 
             } else if (this.direction == "up") {
                 BufferedImage image = this.jump[Math.round(this.compteurjump)];
@@ -146,6 +150,8 @@ public class Archer extends Entity{
                     this.direction = "idle";
 
                 }
+                this.keyboard.getUp().setPressed(false);
+
             }
 
 
