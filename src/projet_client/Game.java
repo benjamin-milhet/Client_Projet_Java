@@ -4,6 +4,7 @@ import projet_client.graphics.Sprite;
 import projet_client.input.Key;
 import projet_client.input.Keyboard;
 import projet_client.modeles.Archer;
+import projet_client.modeles.BarreVie;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,6 +32,7 @@ public class Game extends Canvas implements Runnable {
     private Sprite sprite;
     private Keyboard keyboard;
     private Archer archer;
+    private BarreVie yourLife;
 
     public Game() throws IOException {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -50,6 +52,7 @@ public class Game extends Canvas implements Runnable {
 
         this.keyboard = new Keyboard(this);
         this.archer = new Archer("archer", 5, 310,670,3, this.keyboard);
+        this.yourLife = new BarreVie(100, 100, 100, 100);
     }
 
     public synchronized void start() {
@@ -145,6 +148,7 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(imageBackground, 0, 0, getWidth(), getHeight(), null); // Dessine l'image de fond
 
         this.archer.render(g);
+        this.yourLife.render(g);
 
         g.dispose(); // Libère la mémoire
         bs.show(); // Affiche l'image de fond
