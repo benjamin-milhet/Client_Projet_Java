@@ -122,6 +122,7 @@ public class Archer extends Entity{
                 if(this.compteurAttack >= 5){
                     this.compteurAttack = 0;
                     this.direction = "idle";
+                    Fleche fleche = new Fleche(1, this.x, this.y, this.keyboard, "right");
                 }
 
             } else if (this.direction == "right") {
@@ -153,8 +154,6 @@ public class Archer extends Entity{
                 this.keyboard.getUp().setPressed(false);
 
             }
-
-
         }
     }
 
