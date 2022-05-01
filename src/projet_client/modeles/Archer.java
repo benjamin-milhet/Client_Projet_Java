@@ -66,7 +66,6 @@ public class Archer extends Entity{
 
     @Override
     public void update() {
-
         ArrayList<Fleche> lastFleches = new ArrayList<>();
         for(Fleche f : this.fleches){
             if (f.getLife() > 0){

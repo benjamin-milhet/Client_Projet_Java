@@ -25,11 +25,11 @@ public class BarreVie extends Entity{
     public void render(Graphics g) {
         Color rouge = new Color(209, 26, 83); // Color white
         g.setColor(rouge);
-        g.fillRoundRect(this.x, this.y, this.vieMax*SCALE, 20*SCALE, 20, 20);
+        g.fillRoundRect(this.x-(this.vieMax*SCALE), this.y, this.vieMax*SCALE, 20*SCALE, 20, 20);
 
         Color bleu = new Color(91, 110, 232); // Color white
         g.setColor(bleu);
-        g.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie)), this.y, this.vie*SCALE, 20*SCALE, 20, 20);
+        g.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie))-(this.vieMax*SCALE), this.y, this.vie*SCALE, 20*SCALE, 20, 20);
     }
 
     @Override
