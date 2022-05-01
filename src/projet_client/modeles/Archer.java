@@ -13,6 +13,7 @@ public class Archer extends Entity{
     private int speed;
     private boolean isMooving;
     private int life;
+    private int lifeMax;
     private String direction;
     private int scale = 3;
 
@@ -34,6 +35,7 @@ public class Archer extends Entity{
         this.x = x;
         this.y = y;
         this.life = life;
+        this.lifeMax = life;
         this.direction = "idle";
 
         this.keyboard = keyboard;
@@ -188,6 +190,14 @@ public class Archer extends Entity{
 
     public String getName() {
         return name;
+    }
+
+    public int getLife() {
+        return this.life;
+    }
+
+    public int getLifeMax() {
+        return this.lifeMax;
     }
 
     public void getArcherImages(){
