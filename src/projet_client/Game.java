@@ -1,10 +1,10 @@
 package projet_client;
 
 import projet_client.graphics.Sprite;
-import projet_client.input.Key;
 import projet_client.input.Keyboard;
 import projet_client.modeles.Archer;
 import projet_client.modeles.BarreVie;
+import projet_client.modeles.TimerGfx;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
     private Keyboard keyboard;
     private Archer archer;
     private BarreVie yourLife;
+    private TimerGfx timerGfx;
 
     public Game() throws IOException {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -53,6 +54,7 @@ public class Game extends Canvas implements Runnable {
         this.keyboard = new Keyboard(this);
         this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), (HEIGHT*SCALE)-((HEIGHT*SCALE)/2), 100);
+        this.timerGfx = new TimerGfx(790, 80);
     }
 
     public synchronized void start() {
@@ -149,6 +151,7 @@ public class Game extends Canvas implements Runnable {
 
         this.archer.render(g);
         this.yourLife.render(g);
+        this.timerGfx.render(g);
 
         g.dispose(); // Libère la mémoire
         bs.show(); // Affiche l'image de fond
