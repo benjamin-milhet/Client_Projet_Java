@@ -53,8 +53,8 @@ public class Game extends Canvas implements Runnable {
 
         this.keyboard = new Keyboard(this);
         this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
-        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), (HEIGHT*SCALE)-((HEIGHT*SCALE)/2), 100);
-        this.timerGfx = new TimerGfx(790, 80);
+        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
+        this.timerGfx = new TimerGfx(850, 80);
     }
 
     public synchronized void start() {

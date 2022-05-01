@@ -82,7 +82,6 @@ public class Fleche extends Entity {
     @Override
     public boolean gestionCollision(int x, int y) {
         boolean res = false;
-        System.out.println("x : " + this.x + " y : " + (this.y+y));
         if(this.x + x < 0 || this.x + x > 1750 || this.y + y < 0 || this.y + y > 860){
             System.out.println("Collision avec la map");
             this.compteurYPrime = 0;

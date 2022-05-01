@@ -18,7 +18,7 @@ public class TimerGfx extends Entity{
     public void render(Graphics g) {
         Color vert = new Color(70, 93, 75); // Color white
         g.setColor(vert);
-        g.fillRoundRect(this.x, this.y, 100, 100, 20, 20);
+        g.fillRoundRect(this.x-10, this.y, 100, 100, 20, 20);
     }
 
     @Override
