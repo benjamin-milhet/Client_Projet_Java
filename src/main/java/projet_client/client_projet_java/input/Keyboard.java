@@ -1,6 +1,6 @@
-package projet_client.input;
+package projet_client.client_projet_java.input;
 
-import projet_client.Game;
+import projet_client.client_projet_java.Game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -22,7 +22,7 @@ public class Keyboard implements KeyListener {
         this.left = new Key();
         this.right = new Key();
 
-        game.addKeyListener(this);
+        //game.addKeyListener(this);
 
     }
 

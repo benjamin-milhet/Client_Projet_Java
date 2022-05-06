@@ -1,4 +1,4 @@
-package projet_client.modeles;
+package projet_client.client_projet_java.modeles;
 
 import java.awt.*;
 

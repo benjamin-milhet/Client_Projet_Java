@@ -1,8 +1,8 @@
-package projet_client.modeles;
+package projet_client.client_projet_java.modeles;
 
 import java.awt.*;
 
-import static projet_client.Game.SCALE;
+import static projet_client.client_projet_java.Game.SCALE;
 
 public class BarreVie extends Entity{
 

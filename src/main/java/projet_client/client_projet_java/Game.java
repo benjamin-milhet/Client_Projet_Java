@@ -1,19 +1,21 @@
-package projet_client;
+package projet_client.client_projet_java;
 
-import projet_client.graphics.Sprite;
-import projet_client.input.Keyboard;
-import projet_client.modeles.Archer;
-import projet_client.modeles.BarreVie;
-import projet_client.modeles.TimerGfx;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
+import projet_client.client_projet_java.graphics.Sprite;
+import projet_client.client_projet_java.input.Keyboard;
+
+
+import javafx.application.Application;
+import projet_client.client_projet_java.modeles.Archer;
+import projet_client.client_projet_java.modeles.BarreVie;
+import projet_client.client_projet_java.modeles.TimerGfx;
+
 import java.io.IOException;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Application implements Runnable {
     private static final long serialVersionUID = 1L;
 
     public static final int WIDTH = 600;
@@ -21,13 +23,11 @@ public class Game extends Canvas implements Runnable {
     public static final int SCALE = 3;
     public static final String NAME = "Operation : Ninja";
 
-    private JFrame frame;
     private Thread thread;
     private boolean running;
     private int tickCount = 0;
 
-    private BufferedImage imageBackground = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-    private int[] pixels = ((DataBufferInt) imageBackground.getRaster().getDataBuffer()).getData();
+    private Scene scene;
 
     private Sprite sprite;
     private Keyboard keyboard;
@@ -36,31 +36,29 @@ public class Game extends Canvas implements Runnable {
     private TimerGfx timerGfx;
 
     public Game() throws IOException {
-        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-        this.frame = new JFrame(NAME); // Création de la fenêtre avec le titre "Operation : Ninja"
 
-        this.frame.setSize(WIDTH * SCALE, HEIGHT * SCALE); // Taille de la fenêtre
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Arrete le programme quand on ferme la fenêtre
-        this.frame.setResizable(false); // Empêche le redimensionnement de la fenêtre
+    }
 
-        this.frame.setLayout(new BorderLayout());
-        this.frame.setLocationRelativeTo(null); // Centre la fenêtre sur l'écran
+    @Override
+    public void start(Stage stage) throws Exception {
+        this.running = true;
+        this.thread = new Thread(this);
+        this.thread.start();
 
-        this.frame.add(this, BorderLayout.CENTER);
-        this.frame.pack();
+        StackPane pane = new StackPane();
+        Sprite sprite = new Sprite("Background.png");
 
-        this.frame.setVisible(true);
+        pane.setStyle("-fx-background-image: url(" + sprite.getPath() + "); -fx-background-repeat: no-repeat; -fx-background-size: " +WIDTH* SCALE+" "+HEIGHT* SCALE+"; -fx-background-position: center center;");
+
+        this.scene = new Scene(pane, WIDTH* SCALE, HEIGHT* SCALE);
+
+        stage.setScene(scene);
+        stage.show();
 
         this.keyboard = new Keyboard(this);
         this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         this.timerGfx = new TimerGfx(850, 80);
-    }
-
-    public synchronized void start() {
-        this.running = true;
-        this.thread = new Thread(this);
-        this.thread.start();
     }
 
     public synchronized void stop() {
@@ -82,9 +80,6 @@ public class Game extends Canvas implements Runnable {
 
         long timer = System.currentTimeMillis();
         double delta = 0;
-
-
-
 
         while (running) {
             long now = System.nanoTime();
@@ -127,14 +122,10 @@ public class Game extends Canvas implements Runnable {
     public void update() {
         this.tickCount++;
         this.archer.update();
-
-        for (int i = 0; i < pixels.length; i++) {
-            pixels[i] = i + tickCount;
-        }
     }
 
     public void render() throws IOException, InterruptedException {
-        BufferStrategy bs = this.getBufferStrategy();
+        /*BufferStrategy bs = this.getBufferStrategy();
 
         if (bs == null) {
             this.createBufferStrategy(3); // 3 = nombre de buffers -> Plus il est eleve plus le jeu est fluide
@@ -154,14 +145,14 @@ public class Game extends Canvas implements Runnable {
         this.timerGfx.render(g);
 
         g.dispose(); // Libère la mémoire
-        bs.show(); // Affiche l'image de fond
+        bs.show(); // Affiche l'image de fond*/
     }
 
 
 
     public static void main(String[] args) throws IOException {
         Game game = new Game();
-        game.start();
+        launch(args);
     }
 }
 

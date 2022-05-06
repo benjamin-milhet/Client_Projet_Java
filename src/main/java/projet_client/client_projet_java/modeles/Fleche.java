@@ -1,7 +1,7 @@
-package projet_client.modeles;
+package projet_client.client_projet_java.modeles;
 
-import projet_client.graphics.Sprite;
-import projet_client.input.Keyboard;
+import projet_client.client_projet_java.graphics.Sprite;
+import projet_client.client_projet_java.input.Keyboard;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package projet_client.graphics;
+package projet_client.client_projet_java.graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

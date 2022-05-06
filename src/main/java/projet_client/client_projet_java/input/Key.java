@@ -1,4 +1,4 @@
-package projet_client.input;
+package projet_client.client_projet_java.input;
 
 public class Key {
     public boolean pressed = false;
