@@ -1,34 +1,30 @@
 package projet_client.client_projet_java.graphics;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import javafx.scene.image.Image;
+
 import java.io.IOException;
 
 public class Sprite {
 
     private final String path;
-    private final int width;
-    private final int height;
+    private final double width;
+    private final double height;
 
     private int[] pixels;
 
-    private final BufferedImage image;
+    private final Image image;
 
 
     public Sprite(String path) throws IOException {
-
-        this.image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(path));
+        this.image = new Image(path);
 
         if (this.image == null) {
             throw new IOException("Impossible de charge l'image");
         }
 
         this.path = path;
-        this.width = image.getWidth();
-        this.height = image.getHeight();
-
-        pixels = image.getRGB(0, 0, width, height, null, 0, width);
-
+        this.width = this.image.getWidth();
+        this.height = this.image.getHeight();
 
     }
 
@@ -36,19 +32,15 @@ public class Sprite {
         return path;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public int[] getPixels() {
-        return pixels;
-    }
-
-    public BufferedImage getImage() {
+    public Image getImage() {
     	return this.image;
     }
 

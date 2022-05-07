@@ -1,10 +1,9 @@
 package projet_client.client_projet_java.modeles;
 
+import javafx.scene.image.Image;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Archer extends Entity{
@@ -24,7 +23,7 @@ public class Archer extends Entity{
 
     private Sprite archer;
 
-    private BufferedImage[] idle, attack, jump, run, dead;
+    private Image[] idle, attack, jump, run, dead;
 
     private Keyboard keyboard;
     private ArrayList<Fleche> fleches;
@@ -40,10 +39,10 @@ public class Archer extends Entity{
 
         this.keyboard = keyboard;
 
-        this.idle = new BufferedImage[10];
-        this.attack = new BufferedImage[6];
-        this.jump = new BufferedImage[4];
-        this.run = new BufferedImage[8];
+        this.idle = new Image[10];
+        this.attack = new Image[6];
+        this.jump = new Image[4];
+        this.run = new Image[8];
 
         this.getArcherImages();
 
@@ -125,14 +124,14 @@ public class Archer extends Entity{
     }
 
     @Override
-    public void render(Graphics g){
-        for (int i = 0; i < this.fleches.size(); i++) {
+    public void render(){
+        /*for (int i = 0; i < this.fleches.size(); i++) {
             this.fleches.get(i).render(g);
         }
-        BufferedImage image = null;
+        Image image = null;
         if (this.direction == "idle") {
             image = this.idle[Math.round(this.compteurIdle)];
-            g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+            g.drawImage(image, this.x, this.y, (int)image.getWidth()*this.scale, image.getHeight()*this.scale, null);
             this.compteurIdle+=0.3;
             if(this.compteurIdle >= 9){
                 this.compteurIdle = 0;
@@ -179,7 +178,7 @@ public class Archer extends Entity{
                 this.keyboard.getUp().setPressed(false);
 
             }
-        }
+        }*/
     }
 
     @Override

@@ -1,10 +1,9 @@
 package projet_client.client_projet_java.modeles;
 
+import javafx.scene.image.Image;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Fleche extends Entity {
 
@@ -17,7 +16,7 @@ public class Fleche extends Entity {
     private float compteurFleche;
     private int compteurYPrime;
 
-    private BufferedImage[] fleche;
+    private Image[] fleche;
     private Keyboard keyboard;
 
     public Fleche(int speed, int x, int y, Keyboard keyboard, String direction) {
@@ -30,7 +29,7 @@ public class Fleche extends Entity {
 
         this.keyboard = keyboard;
 
-        this.fleche = new BufferedImage[2];
+        this.fleche = new Image[2];
         this.getArcherImages();
 
         this.compteurFleche = 0;
@@ -70,13 +69,13 @@ public class Fleche extends Entity {
     }
 
     @Override
-    public void render(Graphics g) {
-        BufferedImage image = this.fleche[Math.round(this.compteurFleche)];
+    public void render() {
+        /*BufferedImage image = this.fleche[Math.round(this.compteurFleche)];
         g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
         this.compteurFleche+=0.2;
         if(this.compteurFleche >= 1){
             this.compteurFleche = 0;
-        }
+        }*/
     }
 
     @Override

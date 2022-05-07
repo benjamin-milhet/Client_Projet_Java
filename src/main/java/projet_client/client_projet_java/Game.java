@@ -2,36 +2,32 @@ package projet_client.client_projet_java;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
 import javafx.util.Duration;
+
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
-
-
-import javafx.application.Application;
 import projet_client.client_projet_java.modeles.Archer;
 import projet_client.client_projet_java.modeles.BarreVie;
 import projet_client.client_projet_java.modeles.TimerGfx;
 
 import java.io.IOException;
 
-public class Game extends Application implements Runnable {
-    private static final long serialVersionUID = 1L;
+public class Game extends Application {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = WIDTH / 16 * 9;
     public static final int SCALE = 3;
     public static final String NAME = "Operation : Ninja";
-
-    private Scene scene;
-    private StackPane pane;
-    private Stage stage;
-    private Timeline tl;
 
     private Sprite sprite;
     private Keyboard keyboard;
@@ -39,23 +35,20 @@ public class Game extends Application implements Runnable {
     private BarreVie yourLife;
     private TimerGfx timerGfx;
 
+
     @Override
     public void start(Stage stage) throws Exception {
-        this.pane = new StackPane();
-        this.stage = stage;
-        //Sprite sprite = new Sprite("Background.png");
+        Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
+        GraphicsContext graphics = canvas.getGraphicsContext2D();
 
-        //this.pane.setStyle("-fx-background-image: url(" + sprite.getPath() + "); -fx-background-repeat: no-repeat; -fx-background-size: " +WIDTH* SCALE+" "+HEIGHT* SCALE+"; -fx-background-position: center center;");
+        Scene scene = new Scene(new StackPane(canvas), WIDTH* SCALE, HEIGHT* SCALE);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> run(graphics)));
+        timeline.setCycleCount(Timeline.INDEFINITE);
 
-        this.scene = new Scene(this.pane, WIDTH* SCALE, HEIGHT* SCALE);
-        this.tl = new Timeline(new KeyFrame(Duration.millis(10), event -> run()));
-
-
-        this.run();
-        this.stage.setTitle(NAME);
-        this.stage.setScene(scene);
-        this.stage.show();
-        this.tl.play();
+        stage.setTitle(NAME);
+        stage.setScene(scene);
+        stage.show();
+        timeline.play();
 
 
         //this.keyboard = new Keyboard(this);
@@ -64,51 +57,10 @@ public class Game extends Application implements Runnable {
         //this.timerGfx = new TimerGfx(850, 80);
     }
 
-    public void run() {
-        /*long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000.0 / amountOfTicks;
-
-        int ticks = 0;
-        int frames = 0;
-
-        long timer = System.currentTimeMillis();
-        double delta = 0;
-
-        while (this.running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
-
-            boolean shouldRender = true;
-
-            while (delta >= 1) {
-                ticks++;
-                this.update();
-                delta--;
-                shouldRender = true;
-            }
-
-            if (shouldRender) {
-                frames++;
-                try {
-                    this.render();
-                } catch (IOException | InterruptedException e) {
-                }
-            }
-
-            if (System.currentTimeMillis() - timer >= 1000) {
-                timer += 1000;
-                System.out.println("FPS : " + frames + " TICKS : " + ticks);
-                frames = 0;
-                ticks = 0;
-            }
-
-        }*/
-
+    public void run(GraphicsContext graphics) {
         this.update();
         try {
-            this.render();
+            this.render(graphics);
         } catch (IOException | InterruptedException e) {}
     }
 
@@ -116,17 +68,14 @@ public class Game extends Application implements Runnable {
         //this.archer.update();
     }
 
-    public void render() throws IOException, InterruptedException {
-        Sprite sprite = new Sprite("Background.png");
-        Image image = new Image(sprite.getPath(), true);
+    public void render(GraphicsContext graphics) throws IOException, InterruptedException {
+        Sprite backgroundSprite = new Sprite("Background.png");
 
-        this.pane.getChildren().clear();
+        graphics.clearRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+        graphics.drawImage(backgroundSprite.getImage(), 0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
-        ImageView background = new ImageView(image);
-        background.setFitWidth(WIDTH * SCALE);
-        background.setFitHeight(HEIGHT * SCALE);
-
-        this.pane.getChildren().add(background);
+        //graphics.setFill(Color.BLACK);
+        //graphics.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
         /*BufferStrategy bs = this.getBufferStrategy();
 
