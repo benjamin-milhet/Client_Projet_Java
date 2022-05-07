@@ -1,4 +1,4 @@
-package projet_client;
+package projet_client.client_projet_java;
 
 import java.io.IOException;
 

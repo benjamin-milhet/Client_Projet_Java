@@ -1,8 +1,8 @@
-package projet_client.modeles;
+package projet_client.client_projet_java.modeles;
 
-import java.awt.*;
+import javafx.scene.canvas.GraphicsContext;
 
-import static projet_client.Game.SCALE;
+import static projet_client.client_projet_java.Game.SCALE;
 
 public class BarreVie extends Entity{
 
@@ -22,14 +22,14 @@ public class BarreVie extends Entity{
     }
 
     @Override
-    public void render(Graphics g) {
-        Color rouge = new Color(209, 26, 83); // Color white
+    public void render(GraphicsContext graphics) {
+        /*Color rouge = new Color(209, 26, 83); // Color white
         g.setColor(rouge);
         g.fillRoundRect(this.x-(this.vieMax*SCALE), this.y, this.vieMax*SCALE, 20*SCALE, 20, 20);
 
         Color bleu = new Color(91, 110, 232); // Color white
         g.setColor(bleu);
-        g.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie))-(this.vieMax*SCALE), this.y, this.vie*SCALE, 20*SCALE, 20, 20);
+        g.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie))-(this.vieMax*SCALE), this.y, this.vie*SCALE, 20*SCALE, 20, 20);*/
     }
 
     @Override
