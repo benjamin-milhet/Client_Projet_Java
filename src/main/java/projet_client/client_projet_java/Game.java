@@ -40,19 +40,20 @@ public class Game extends AnimationTimer {
         this.graphics = graphics;
 
         Scene scene = new Scene(new StackPane(canvas), WIDTH* SCALE, HEIGHT* SCALE);
-        //Timeline timeline = new Timeline(new KeyFrame(Duration.millis(25), event -> run(graphics)));
-        //timeline.setCycleCount(Timeline.INDEFINITE);
 
         stage.setTitle(NAME);
         stage.setScene(scene);
         stage.show();
-        //timeline.play();
-
 
         this.keyboard = new Keyboard(scene);
         this.archer = new Archer("archer", 20, 50 * SCALE,225 * SCALE,100, this.keyboard);
         //this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         //this.timerGfx = new TimerGfx(850, 80);
+    }
+
+    @Override
+    public void handle(long now) {
+        this.run(graphics);
     }
 
     public void run(GraphicsContext graphics) {
@@ -76,11 +77,6 @@ public class Game extends AnimationTimer {
         /*this.yourLife.render(graphics);
         this.timerGfx.render(graphics);*/
 
-    }
-
-    @Override
-    public void handle(long now) {
-        this.run(graphics);
     }
 }
 
