@@ -1,12 +1,13 @@
 package projet_client.client_projet_java.input;
 
-import projet_client.client_projet_java.Game;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-public class Keyboard implements KeyListener {
+public class Keyboard {
 
     private ArrayList<Key> keys;
     private Key up;
@@ -14,7 +15,7 @@ public class Keyboard implements KeyListener {
     private Key left;
     private Key right;
 
-    public Keyboard(Game game) {
+    public Keyboard(Scene scene) {
         this.keys = new ArrayList<>();
 
         this.up = new Key();
@@ -22,37 +23,34 @@ public class Keyboard implements KeyListener {
         this.left = new Key();
         this.right = new Key();
 
-        //game.addKeyListener(this);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                pressedOnKey(event.getCode(), true);
+            }
+        });
 
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                pressedOnKey(event.getCode(), false);
+            }
+        });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        pressedOnKey(e.getKeyCode(), true);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        pressedOnKey(e.getKeyCode(), false);
-    }
-
-    public void pressedOnKey(int keyCode, boolean isPressed) {
+    public void pressedOnKey(KeyCode keyCode, boolean isPressed) {
         switch (keyCode) {
-            case KeyEvent.VK_Z:
+            case W:
                 this.up.setPressed(isPressed);
                 break;
-            case KeyEvent.VK_S:
+            case S:
                 this.down.setPressed(isPressed);
                 break;
-            case KeyEvent.VK_Q:
+            case A:
                 this.left.setPressed(isPressed);
                 break;
-            case KeyEvent.VK_D:
+            case D:
                 this.right.setPressed(isPressed);
                 break;
         }

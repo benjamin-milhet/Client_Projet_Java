@@ -1,5 +1,6 @@
 package projet_client.client_projet_java.modeles;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
@@ -69,7 +70,7 @@ public class Fleche extends Entity {
     }
 
     @Override
-    public void render() {
+    public void render(GraphicsContext graphics) {
         /*BufferedImage image = this.fleche[Math.round(this.compteurFleche)];
         g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
         this.compteurFleche+=0.2;

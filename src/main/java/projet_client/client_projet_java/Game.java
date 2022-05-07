@@ -51,8 +51,8 @@ public class Game extends Application {
         timeline.play();
 
 
-        //this.keyboard = new Keyboard(this);
-        //this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
+        this.keyboard = new Keyboard(scene);
+        this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
         //this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         //this.timerGfx = new TimerGfx(850, 80);
     }
@@ -65,7 +65,7 @@ public class Game extends Application {
     }
 
     public void update() {
-        //this.archer.update();
+        this.archer.update();
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
@@ -74,36 +74,15 @@ public class Game extends Application {
         graphics.clearRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         graphics.drawImage(backgroundSprite.getImage(), 0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
-        //graphics.setFill(Color.BLACK);
-        //graphics.fillRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
+        this.archer.render(graphics);
+        /*this.yourLife.render(graphics);
+        this.timerGfx.render(graphics);*/
 
-        /*BufferStrategy bs = this.getBufferStrategy();
-
-        if (bs == null) {
-            this.createBufferStrategy(3); // 3 = nombre de buffers -> Plus il est eleve plus le jeu est fluide
-            return;
-        }
-
-        Graphics g = bs.getDrawGraphics();
-
-        Sprite sprite = new Sprite("Background.png");
-
-        this.pixels = sprite.getPixels();
-        imageBackground = sprite.getImage();
-        g.drawImage(imageBackground, 0, 0, getWidth(), getHeight(), null); // Dessine l'image de fond
-
-        this.archer.render(g);
-        this.yourLife.render(g);
-        this.timerGfx.render(g);
-
-        g.dispose(); // Libère la mémoire
-        bs.show(); // Affiche l'image de fond*/
     }
 
 
 
     public static void main(String[] args) throws IOException {
-        //Game game = new Game();
         launch(args);
     }
 }

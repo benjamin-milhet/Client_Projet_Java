@@ -1,5 +1,6 @@
 package projet_client.client_projet_java.modeles;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
@@ -124,7 +125,7 @@ public class Archer extends Entity{
     }
 
     @Override
-    public void render(){
+    public void render(GraphicsContext graphics){
         /*for (int i = 0; i < this.fleches.size(); i++) {
             this.fleches.get(i).render(g);
         }
