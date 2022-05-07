@@ -81,18 +81,19 @@ public class Archer extends Entity{
         int yPrime = 0;
 
 
-        /*if(this.compteurjump < 0.2){
-            if (this.y < 670) {
-                this.y = 670;
+        if(this.compteurjump < 0.2){
+            if (this.y < (225 * SCALE)){
+                this.y = (225 * SCALE);
             }
-        }*/
+        }
 
-        if(this.compteurjump == 0 && this.compteurAttack == 0 && this.y == 670){
+        if(this.compteurjump == 0 && this.compteurAttack == 0 && this.y == (225 * SCALE)){
 
             this.direction = "idle";
 
             if (this.keyboard.getUp().isPressed()) {
-                yPrime = -30;
+                System.out.println("up");
+                yPrime = -(10 * SCALE);
                 this.direction = "up";
                 this.compteurjump = 0;
             }
@@ -115,6 +116,7 @@ public class Archer extends Entity{
         }
 
         if (xPrime != 0 || yPrime != 0) {
+            System.out.println("move");
             move(xPrime, yPrime);
             this.isMooving = true;
         } else {
@@ -125,6 +127,8 @@ public class Archer extends Entity{
 
     @Override
     public void render(GraphicsContext graphics){
+        if(this.direction != "idle") System.out.println(this.direction);
+
         for (int i = 0; i < this.fleches.size(); i++) {
             this.fleches.get(i).render(graphics);
         }
