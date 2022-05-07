@@ -22,7 +22,7 @@ public class Game extends Application {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = WIDTH / 16 * 9;
-    public static final int SCALE = 3;
+    public static final int SCALE = 2;
     public static final String NAME = "Operation : Ninja";
 
     private Keyboard keyboard;
@@ -47,7 +47,7 @@ public class Game extends Application {
 
 
         this.keyboard = new Keyboard(scene);
-        this.archer = new Archer("archer", 5, 310,670,100, this.keyboard);
+        this.archer = new Archer("archer", 5, 50 * SCALE,225 * SCALE,100, this.keyboard);
         //this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         //this.timerGfx = new TimerGfx(850, 80);
     }
@@ -64,7 +64,7 @@ public class Game extends Application {
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
-        Sprite backgroundSprite = new Sprite("/Background.png");
+        Sprite backgroundSprite = new Sprite("/Background.png", 928, 522);
 
         graphics.clearRect(0, 0, WIDTH * SCALE, HEIGHT * SCALE);
         graphics.drawImage(backgroundSprite.getImage(), 0, 0, WIDTH * SCALE, HEIGHT * SCALE);

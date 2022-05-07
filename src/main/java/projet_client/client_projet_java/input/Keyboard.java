@@ -40,6 +40,7 @@ public class Keyboard {
 
 
     public void pressedOnKey(KeyCode keyCode, boolean isPressed) {
+        System.out.println(keyCode.toString());
         switch (keyCode) {
             case W:
                 this.up.setPressed(isPressed);

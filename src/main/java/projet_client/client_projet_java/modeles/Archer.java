@@ -81,11 +81,11 @@ public class Archer extends Entity{
         int yPrime = 0;
 
 
-        if(this.compteurjump < 0.2){
+        /*if(this.compteurjump < 0.2){
             if (this.y < 670) {
                 this.y = 670;
             }
-        }
+        }*/
 
         if(this.compteurjump == 0 && this.compteurAttack == 0 && this.y == 670){
 
@@ -131,7 +131,7 @@ public class Archer extends Entity{
         Image archerSprite;
         if (this.direction == "idle") {
             archerSprite = this.idle[Math.round(this.compteurIdle)];
-            graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
+            graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
             this.compteurIdle+=0.3;
             if(this.compteurIdle >= 9){
                 this.compteurIdle = 0;
@@ -139,7 +139,7 @@ public class Archer extends Entity{
         } else {
             if (this.direction == "down") {
                 archerSprite = this.attack[Math.round(this.compteurAttack)];
-                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
                 this.compteurAttack+=0.2;
                 if(this.compteurAttack >= 5){
                     this.compteurAttack = 0;
@@ -151,7 +151,7 @@ public class Archer extends Entity{
 
             } else if (this.direction == "right") {
                 archerSprite = this.run[Math.round(this.compteurRun)];
-                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
                 this.compteurRun+=0.2;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
@@ -159,7 +159,7 @@ public class Archer extends Entity{
 
             } else if (this.direction == "left") {
                 archerSprite = this.run[Math.round(this.compteurRun)];
-                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
                 this.compteurRun+=0.2;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
@@ -167,7 +167,7 @@ public class Archer extends Entity{
 
             } else if (this.direction == "up") {
                 archerSprite = this.jump[Math.round(this.compteurjump)];
-                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
 
                 this.compteurjump += 0.2;
                 if(this.compteurjump >= 3){
@@ -202,15 +202,15 @@ public class Archer extends Entity{
         Sprite archer;
         try {
             for (int i = 0; i < this.idle.length; i++) {
-                archer = new Sprite("/archer/idle/tile00" + i + ".png");
+                archer = new Sprite("/archer/idle/tile00" + i + ".png", 100, 100);
                 this.idle[i] = archer.getImage();
             }
             for (int i = 0; i < this.attack.length; i++) {
-                archer = new Sprite("/archer/attack/tile00" + i + ".png");
+                archer = new Sprite("/archer/attack/tile00" + i + ".png", 100, 100);
                 this.attack[i] = archer.getImage();
             }
             for (int i = 0; i < this.jump.length; i++) {
-                archer = new Sprite("/archer/jump/tile00" + i + ".png");
+                archer = new Sprite("/archer/jump/tile00" + i + ".png", 100, 100);
                 this.jump[i] = archer.getImage();
             }
             /*for (int i = 0; i < this.run.length; i++) {

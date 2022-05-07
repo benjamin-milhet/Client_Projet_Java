@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
+import static projet_client.client_projet_java.Game.SCALE;
+
 public class Sprite {
 
     private final String path;
@@ -13,8 +15,8 @@ public class Sprite {
 
     private final Image image;
 
-    public Sprite(String path) throws IOException {
-            this.image = new Image(getClass().getResource(path).toExternalForm());
+    public Sprite(String path, int width, int height) throws IOException {
+            this.image = new Image(getClass().getResource(path).toExternalForm(), width * SCALE, height * SCALE, false, false);
 
             if (this.image == null) {
                 throw new IOException("Impossible de charge l'image");

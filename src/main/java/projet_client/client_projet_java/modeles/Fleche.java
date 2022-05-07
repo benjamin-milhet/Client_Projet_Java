@@ -94,7 +94,7 @@ public class Fleche extends Entity {
     public void getArcherImages(){
         try {
             for (int i = 0; i < this.fleche.length; i++) {
-                Sprite fleche = new Sprite("fleche/tile00" + i + ".png");
+                Sprite fleche = new Sprite("fleche/tile00" + i + ".png", 100, 100);
                 this.fleche[i] = fleche.getImage();
             }
 
