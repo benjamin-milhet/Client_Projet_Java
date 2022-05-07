@@ -76,7 +76,7 @@ public class Fleche extends Entity {
         Image fleche = this.fleche[Math.round(this.compteurFleche)];
         graphics.drawImage(fleche, this.x, this.y, fleche.getWidth(), fleche.getHeight());
 
-        this.compteurFleche+=0.2;
+        this.compteurFleche++;
         if(this.compteurFleche >= 1){
             this.compteurFleche = 0;
         }

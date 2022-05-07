@@ -1,5 +1,6 @@
 package projet_client.client_projet_java;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -18,7 +19,7 @@ import projet_client.client_projet_java.modeles.TimerGfx;
 
 import java.io.IOException;
 
-public class Game extends Application {
+public class Game extends AnimationTimer {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = WIDTH / 16 * 9;
@@ -30,24 +31,26 @@ public class Game extends Application {
     private BarreVie yourLife;
     private TimerGfx timerGfx;
 
+    private GraphicsContext graphics;
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    public Game(Stage stage) throws Exception {
+        super();
         Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
         GraphicsContext graphics = canvas.getGraphicsContext2D();
+        this.graphics = graphics;
 
         Scene scene = new Scene(new StackPane(canvas), WIDTH* SCALE, HEIGHT* SCALE);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(25), e -> run(graphics)));
-        timeline.setCycleCount(Timeline.INDEFINITE);
+        //Timeline timeline = new Timeline(new KeyFrame(Duration.millis(25), event -> run(graphics)));
+        //timeline.setCycleCount(Timeline.INDEFINITE);
 
         stage.setTitle(NAME);
         stage.setScene(scene);
         stage.show();
-        timeline.play();
+        //timeline.play();
 
 
         this.keyboard = new Keyboard(scene);
-        this.archer = new Archer("archer", 5, 50 * SCALE,225 * SCALE,100, this.keyboard);
+        this.archer = new Archer("archer", 20, 50 * SCALE,225 * SCALE,100, this.keyboard);
         //this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         //this.timerGfx = new TimerGfx(850, 80);
     }
@@ -75,10 +78,9 @@ public class Game extends Application {
 
     }
 
-
-
-    public static void main(String[] args) throws IOException {
-        launch(args);
+    @Override
+    public void handle(long now) {
+        this.run(graphics);
     }
 }
 

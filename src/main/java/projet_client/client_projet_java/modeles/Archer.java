@@ -81,7 +81,7 @@ public class Archer extends Entity{
         int yPrime = 0;
 
 
-        if(this.compteurjump < 0.2){
+        if(this.compteurjump < 0.5){
             if (this.y < (225 * SCALE)){
                 this.y = (225 * SCALE);
             }
@@ -92,7 +92,7 @@ public class Archer extends Entity{
             this.direction = "idle";
 
             if (this.keyboard.getUp().isPressed()) {
-                yPrime = -(10 * SCALE);
+                yPrime = -(3 * SCALE);
                 this.direction = "up";
                 this.compteurjump = 0;
             }
@@ -114,7 +114,6 @@ public class Archer extends Entity{
         }
 
         if (xPrime != 0 || yPrime != 0) {
-            System.out.println("move");
             move(xPrime, yPrime);
             this.isMooving = true;
         } else {
@@ -124,8 +123,6 @@ public class Archer extends Entity{
 
     @Override
     public void render(GraphicsContext graphics){
-        if(this.direction != "idle") System.out.println(this.direction);
-
         for (int i = 0; i < this.fleches.size(); i++) {
             this.fleches.get(i).render(graphics);
         }
@@ -133,7 +130,7 @@ public class Archer extends Entity{
         if (this.direction == "idle") {
             archerSprite = this.idle[Math.round(this.compteurIdle)];
             graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
-            this.compteurIdle+=0.3;
+            this.compteurIdle += 0.5;
             if(this.compteurIdle >= 9){
                 this.compteurIdle = 0;
             }
@@ -141,19 +138,19 @@ public class Archer extends Entity{
             if (this.direction == "down") {
                 archerSprite = this.attack[Math.round(this.compteurAttack)];
                 graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
-                this.compteurAttack+=0.2;
+                this.compteurAttack += 0.5;
                 if(this.compteurAttack >= 5){
                     this.compteurAttack = 0;
                     this.direction = "idle";
 
-                    Fleche fleche = new Fleche(1 * SCALE, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
+                    Fleche fleche = new Fleche(2 * SCALE, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
                     this.fleches.add(fleche);
                 }
 
             } else if (this.direction == "right") {
                 archerSprite = this.run[Math.round(this.compteurRun)];
                 graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
-                this.compteurRun+=0.2;
+                this.compteurRun += 0.5;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
                 }
@@ -161,7 +158,7 @@ public class Archer extends Entity{
             } else if (this.direction == "left") {
                 archerSprite = this.run[Math.round(this.compteurRun)];
                 graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
-                this.compteurRun+=0.2;
+                this.compteurRun += 0.5;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
                 }
@@ -170,7 +167,7 @@ public class Archer extends Entity{
                 archerSprite = this.jump[Math.round(this.compteurjump)];
                 graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
 
-                this.compteurjump += 0.2;
+                this.compteurjump += 0.5;
                 if(this.compteurjump >= 3){
                     this.compteurjump = 0;
                     this.direction = "idle";
