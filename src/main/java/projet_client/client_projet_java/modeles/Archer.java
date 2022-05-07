@@ -7,6 +7,8 @@ import projet_client.client_projet_java.input.Keyboard;
 
 import java.util.ArrayList;
 
+import static projet_client.client_projet_java.Game.SCALE;
+
 public class Archer extends Entity{
 
     private String name;
@@ -15,14 +17,11 @@ public class Archer extends Entity{
     private int life;
     private int lifeMax;
     private String direction;
-    private int scale = 3;
 
     private float compteurIdle;
     private float compteurAttack;
     private float compteurjump;
     private float compteurRun;
-
-    private Sprite archer;
 
     private Image[] idle, attack, jump, run, dead;
 
@@ -126,21 +125,21 @@ public class Archer extends Entity{
 
     @Override
     public void render(GraphicsContext graphics){
-        /*for (int i = 0; i < this.fleches.size(); i++) {
-            this.fleches.get(i).render(g);
+        for (int i = 0; i < this.fleches.size(); i++) {
+            this.fleches.get(i).render(graphics);
         }
-        Image image = null;
+        Image archerSprite;
         if (this.direction == "idle") {
-            image = this.idle[Math.round(this.compteurIdle)];
-            g.drawImage(image, this.x, this.y, (int)image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+            archerSprite = this.idle[Math.round(this.compteurIdle)];
+            graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
             this.compteurIdle+=0.3;
             if(this.compteurIdle >= 9){
                 this.compteurIdle = 0;
             }
         } else {
             if (this.direction == "down") {
-                image = this.attack[Math.round(this.compteurAttack)];
-                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                archerSprite = this.attack[Math.round(this.compteurAttack)];
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
                 this.compteurAttack+=0.2;
                 if(this.compteurAttack >= 5){
                     this.compteurAttack = 0;
@@ -151,24 +150,24 @@ public class Archer extends Entity{
                 }
 
             } else if (this.direction == "right") {
-                image = this.run[Math.round(this.compteurRun)];
-                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                archerSprite = this.run[Math.round(this.compteurRun)];
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
                 this.compteurRun+=0.2;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
                 }
 
             } else if (this.direction == "left") {
-                image = this.run[Math.round(this.compteurRun)];
-                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                archerSprite = this.run[Math.round(this.compteurRun)];
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
                 this.compteurRun+=0.2;
                 if(this.compteurRun >= 7){
                     this.compteurRun = 0;
                 }
 
             } else if (this.direction == "up") {
-                image = this.jump[Math.round(this.compteurjump)];
-                g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+                archerSprite = this.jump[Math.round(this.compteurjump)];
+                graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth() * SCALE, archerSprite.getHeight() * SCALE);
 
                 this.compteurjump += 0.2;
                 if(this.compteurjump >= 3){
@@ -179,7 +178,7 @@ public class Archer extends Entity{
                 this.keyboard.getUp().setPressed(false);
 
             }
-        }*/
+        }
     }
 
     @Override
@@ -200,25 +199,27 @@ public class Archer extends Entity{
     }
 
     public void getArcherImages(){
+        Sprite archer;
         try {
             for (int i = 0; i < this.idle.length; i++) {
-                this.archer = new Sprite("archer/idle/tile00" + i + ".png");
-                this.idle[i] = this.archer.getImage();
+                archer = new Sprite("/archer/idle/tile00" + i + ".png");
+                this.idle[i] = archer.getImage();
             }
             for (int i = 0; i < this.attack.length; i++) {
-                this.archer = new Sprite("archer/attack/tile00" + i + ".png");
-                this.attack[i] = this.archer.getImage();
+                archer = new Sprite("/archer/attack/tile00" + i + ".png");
+                this.attack[i] = archer.getImage();
             }
             for (int i = 0; i < this.jump.length; i++) {
-                this.archer = new Sprite("archer/jump/tile00" + i + ".png");
-                this.jump[i] = this.archer.getImage();
+                archer = new Sprite("/archer/jump/tile00" + i + ".png");
+                this.jump[i] = archer.getImage();
             }
-            for (int i = 0; i < this.run.length; i++) {
-                this.archer = new Sprite("archer/run/tile00" + i + ".png");
-                this.run[i] = this.archer.getImage();
-            }
+            /*for (int i = 0; i < this.run.length; i++) {
+                archer = new Sprite("archer/run/tile00" + i + ".png");
+                this.run[i] = archer.getImage();
+            }*/
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Erreur lors du chargement des images de l'archer");
         }
     }
