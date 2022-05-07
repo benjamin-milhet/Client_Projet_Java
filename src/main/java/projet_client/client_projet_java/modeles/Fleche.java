@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
+import static projet_client.client_projet_java.Game.SCALE;
+import static projet_client.client_projet_java.Game.WIDTH;
+
 
 public class Fleche extends Entity {
 
@@ -71,18 +74,19 @@ public class Fleche extends Entity {
 
     @Override
     public void render(GraphicsContext graphics) {
-        /*BufferedImage image = this.fleche[Math.round(this.compteurFleche)];
-        g.drawImage(image, this.x, this.y, image.getWidth()*this.scale, image.getHeight()*this.scale, null);
+        Image fleche = this.fleche[Math.round(this.compteurFleche)];
+        graphics.drawImage(fleche, this.x, this.y, fleche.getWidth(), fleche.getHeight());
+
         this.compteurFleche+=0.2;
         if(this.compteurFleche >= 1){
             this.compteurFleche = 0;
-        }*/
+        }
     }
 
     @Override
     public boolean gestionCollision(int x, int y) {
         boolean res = false;
-        if(this.x + x < 0 || this.x + x > 1750 || this.y + y < 0 || this.y + y > 860){
+        if(this.x + x < 0 || this.x + x > (600 * SCALE) || this.y + y < 0 || this.y + y > (290 * SCALE)){
             System.out.println("Collision avec la map");
             this.compteurYPrime = 0;
             res = true;
@@ -94,7 +98,7 @@ public class Fleche extends Entity {
     public void getArcherImages(){
         try {
             for (int i = 0; i < this.fleche.length; i++) {
-                Sprite fleche = new Sprite("fleche/tile00" + i + ".png", 100, 100);
+                Sprite fleche = new Sprite("/fleche/tile00" + i + ".png", 24, 5);
                 this.fleche[i] = fleche.getImage();
             }
 

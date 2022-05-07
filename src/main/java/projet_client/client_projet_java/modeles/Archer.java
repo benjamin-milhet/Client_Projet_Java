@@ -92,14 +92,12 @@ public class Archer extends Entity{
             this.direction = "idle";
 
             if (this.keyboard.getUp().isPressed()) {
-                System.out.println("up");
                 yPrime = -(10 * SCALE);
                 this.direction = "up";
                 this.compteurjump = 0;
             }
 
             if (this.keyboard.getDown().isPressed()) {
-                //yPrime++;
                 this.direction = "down";
                 this.compteurAttack = 0;
             }
@@ -121,7 +119,6 @@ public class Archer extends Entity{
             this.isMooving = true;
         } else {
             this.isMooving = false;
-            //this.direction = "idle";
         }
     }
 
@@ -149,7 +146,7 @@ public class Archer extends Entity{
                     this.compteurAttack = 0;
                     this.direction = "idle";
 
-                    Fleche fleche = new Fleche(4, this.x+180, this.y+125, this.keyboard, "right");
+                    Fleche fleche = new Fleche(1 * SCALE, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
                     this.fleches.add(fleche);
                 }
 
