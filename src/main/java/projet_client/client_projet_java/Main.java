@@ -1,10 +1,19 @@
 package projet_client.client_projet_java;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
-public class Main {
+public class Main extends Application {
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Game game = new Game(stage);
+        game.start();
     }
 }
