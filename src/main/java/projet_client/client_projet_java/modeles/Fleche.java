@@ -6,7 +6,6 @@ import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
 import static projet_client.client_projet_java.Game.SCALE;
-import static projet_client.client_projet_java.Game.WIDTH;
 
 
 public class Fleche extends Entity {
