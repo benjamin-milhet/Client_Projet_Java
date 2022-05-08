@@ -216,10 +216,10 @@ public class Archer extends Entity{
                 archer = new Sprite("/archer/jump/tile00" + i + ".png", 100, 100);
                 this.jump[i] = archer.getImage();
             }
-            /*for (int i = 0; i < this.run.length; i++) {
-                archer = new Sprite("archer/run/tile00" + i + ".png");
+            for (int i = 0; i < this.run.length; i++) {
+                archer = new Sprite("/archer/run/tile00" + i + ".png", 100, 100);
                 this.run[i] = archer.getImage();
-            }*/
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
