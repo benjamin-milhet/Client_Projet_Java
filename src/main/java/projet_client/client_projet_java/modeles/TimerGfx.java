@@ -1,6 +1,7 @@
 package projet_client.client_projet_java.modeles;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class TimerGfx extends Entity{
 
@@ -16,9 +17,9 @@ public class TimerGfx extends Entity{
 
     @Override
     public void render(GraphicsContext graphics) {
-        /*Color vert = new Color(70, 93, 75); // Color white
-        g.setColor(vert);
-        g.fillRoundRect(this.x-10, this.y, 100, 100, 20, 20);*/
+        Color vert = Color.rgb(47, 55, 76);
+        graphics.setFill(vert);
+        graphics.fillRoundRect(this.x-10, this.y, 100, 100, 20, 20);
     }
 
     @Override
