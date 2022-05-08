@@ -1,7 +1,6 @@
 package projet_client.client_projet_java.graphics;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
