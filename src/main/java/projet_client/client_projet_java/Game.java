@@ -48,7 +48,7 @@ public class Game extends AnimationTimer {
         this.keyboard = new Keyboard(scene);
         this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
-        //this.timerGfx = new TimerGfx(850, 80);
+        this.timerGfx = new TimerGfx(850, 80);
     }
 
     @Override
@@ -75,8 +75,7 @@ public class Game extends AnimationTimer {
 
         this.archer.render(graphics);
         this.yourLife.render(graphics);
-        //this.timerGfx.render(graphics);
-
+        this.timerGfx.render(graphics);
     }
 }
 
