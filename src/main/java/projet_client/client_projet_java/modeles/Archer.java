@@ -185,7 +185,7 @@ public class Archer extends Entity{
     }
 
     public void lancerFleche(){
-        Fleche fleche = new Fleche(2 * SCALE, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
+        Fleche fleche = new Fleche(1 * SCALE, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
         this.fleches.add(fleche);
     }
 
