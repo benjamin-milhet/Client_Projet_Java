@@ -23,7 +23,7 @@ public class Game extends AnimationTimer {
 
     public static final int WIDTH = 600;
     public static final int HEIGHT = WIDTH / 16 * 9;
-    public static final int SCALE = 2;
+    public static final int SCALE = 3;
     public static final String NAME = "Operation : Ninja";
 
     private Keyboard keyboard;
@@ -46,8 +46,8 @@ public class Game extends AnimationTimer {
         stage.show();
 
         this.keyboard = new Keyboard(scene);
-        this.archer = new Archer("archer", 20, 50 * SCALE,225 * SCALE,100, this.keyboard);
-        //this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
+        this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
+        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         //this.timerGfx = new TimerGfx(850, 80);
     }
 
@@ -74,8 +74,8 @@ public class Game extends AnimationTimer {
         graphics.drawImage(backgroundSprite.getImage(), 0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
         this.archer.render(graphics);
-        /*this.yourLife.render(graphics);
-        this.timerGfx.render(graphics);*/
+        this.yourLife.render(graphics);
+        //this.timerGfx.render(graphics);
 
     }
 }

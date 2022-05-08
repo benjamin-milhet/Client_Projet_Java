@@ -1,6 +1,7 @@
 package projet_client.client_projet_java.modeles;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import static projet_client.client_projet_java.Game.SCALE;
 
@@ -23,13 +24,13 @@ public class BarreVie extends Entity{
 
     @Override
     public void render(GraphicsContext graphics) {
-        /*Color rouge = new Color(209, 26, 83); // Color white
-        g.setColor(rouge);
-        g.fillRoundRect(this.x-(this.vieMax*SCALE), this.y, this.vieMax*SCALE, 20*SCALE, 20, 20);
+        Color rouge = Color.rgb(93, 9, 35); // Color white
+        graphics.setFill(rouge);
+        graphics.fillRoundRect(this.x-(this.vieMax*SCALE), this.y, this.vieMax*SCALE + (1 * SCALE), 15*SCALE, 20, 20);
 
-        Color bleu = new Color(91, 110, 232); // Color white
-        g.setColor(bleu);
-        g.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie))-(this.vieMax*SCALE), this.y, this.vie*SCALE, 20*SCALE, 20, 20);*/
+        Color bleu = Color.rgb(55, 90, 59); // Color white
+        graphics.setFill(bleu);
+        graphics.fillRoundRect(this.x+(SCALE*(this.vieMax-this.vie))-(this.vieMax*SCALE) - (1 * SCALE), this.y + (1.5 * SCALE), this.vie*SCALE, 12*SCALE, 20, 20);
     }
 
     @Override
