@@ -12,6 +12,7 @@ import projet_client.client_projet_java.input.Keyboard;
 import projet_client.client_projet_java.modeles.Archer;
 import projet_client.client_projet_java.modeles.BarreVie;
 import projet_client.client_projet_java.modeles.TimerGfx;
+import projet_client.client_projet_java.network.Client;
 
 import java.io.IOException;
 
@@ -28,6 +29,7 @@ public class Game extends AnimationTimer {
     private TimerGfx timerGfx;
 
     private GraphicsContext graphics;
+    private Client client;
 
     public Game(Stage stage) throws Exception {
         super();
@@ -45,6 +47,14 @@ public class Game extends AnimationTimer {
         this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
         this.timerGfx = new TimerGfx(850, 80);
+
+        this.client = new Client(this);
+
+        try {
+            this.client.sendMessage(this.archer.getX() + "");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -61,6 +71,11 @@ public class Game extends AnimationTimer {
 
     public void update() {
         this.archer.update();
+        try {
+            this.client.sendMessage(this.archer.getX() + "");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
@@ -72,6 +87,10 @@ public class Game extends AnimationTimer {
         this.archer.render(graphics);
         this.yourLife.render(graphics);
         this.timerGfx.render(graphics);
+    }
+
+    public Archer getArcher() {
+        return archer;
     }
 }
 
