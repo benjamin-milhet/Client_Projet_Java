@@ -10,4 +10,12 @@ public abstract class Entity {
     public abstract void update();
     public abstract void render(GraphicsContext graphics);
     public abstract boolean gestionCollision(int x, int y);
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

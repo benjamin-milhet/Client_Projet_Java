@@ -6,4 +6,6 @@ module projet_client.client_projet_java {
 
     opens projet_client.client_projet_java to javafx.fxml;
     exports projet_client.client_projet_java;
+    exports projet_client.client_projet_java.network;
+    opens projet_client.client_projet_java.network to javafx.fxml;
 }
