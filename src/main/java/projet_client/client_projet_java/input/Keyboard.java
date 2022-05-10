@@ -41,12 +41,14 @@ public class Keyboard {
 
     public void pressedOnKey(KeyCode keyCode, boolean isPressed) {
         switch (keyCode) {
+            case W:
             case Z:
                 this.up.setPressed(isPressed);
                 break;
             case S:
                 this.down.setPressed(isPressed);
                 break;
+            case A:
             case Q:
                 this.left.setPressed(isPressed);
                 break;
