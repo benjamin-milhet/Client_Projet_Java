@@ -11,6 +11,7 @@ import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 import projet_client.client_projet_java.modeles.Archer;
 import projet_client.client_projet_java.modeles.BarreVie;
+import projet_client.client_projet_java.modeles.Entity;
 import projet_client.client_projet_java.modeles.TimerGfx;
 import projet_client.client_projet_java.network.Client;
 
@@ -24,9 +25,11 @@ public class Game extends AnimationTimer {
     public static final String NAME = "Operation : Ninja";
 
     private Keyboard keyboard;
-    private Archer archer;
-    private BarreVie yourLife;
+    private Archer archer, adversaire;
+    private BarreVie yourLife, adversaireLife;
     private TimerGfx timerGfx;
+
+    private boolean isStarted = false;
 
     private GraphicsContext graphics;
     private Client client;
@@ -45,16 +48,10 @@ public class Game extends AnimationTimer {
 
         this.keyboard = new Keyboard(scene);
         this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
-        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100);
+        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        this.client = new Client(this);
-
-        try {
-            this.client.sendMessage(this.archer.getX() + "");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        this.client = new Client(this, this.keyboard);
     }
 
     @Override
@@ -63,19 +60,21 @@ public class Game extends AnimationTimer {
     }
 
     public void run(GraphicsContext graphics) {
-        this.update();
-        try {
-            this.render(graphics);
-        } catch (IOException | InterruptedException e) {}
+        if (this.isStarted) {
+            this.update();
+            try {
+                this.render(graphics);
+            } catch (IOException | InterruptedException e) {}
+        }
     }
 
     public void update() {
         this.archer.update();
-        try {
+        /*try {
             this.client.sendMessage(this.archer.getX() + "");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
@@ -85,12 +84,22 @@ public class Game extends AnimationTimer {
         graphics.drawImage(backgroundSprite.getImage(), 0, 0, WIDTH * SCALE, HEIGHT * SCALE);
 
         this.archer.render(graphics);
+
         this.yourLife.render(graphics);
+        this.adversaireLife.render(graphics);
+
         this.timerGfx.render(graphics);
     }
 
     public Archer getArcher() {
         return archer;
+    }
+
+    public void addAdversaire(Entity adversaire) {
+        System.out.println("addAdversaire");
+        this.adversaire = (Archer) adversaire;
+        this.adversaireLife = new BarreVie(this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
+        this.isStarted = true;
     }
 }
 
