@@ -88,13 +88,15 @@ public class Game extends AnimationTimer {
         this.yourLife.render(graphics);
         this.adversaireLife.render(graphics);
 
+        this.adversaire.render(graphics);
+
         this.timerGfx.render(graphics);
     }
 
     public void addAdversaire(String adversaire) {
         System.out.println("addAdversaire");
 
-        this.adversaire = FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
+        this.adversaire = FabriqueEntity.fabrique(adversaire, 10, 450,225,100, this.keyboard);
 
         this.adversaireLife = new BarreVie(this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
         this.isStarted = true;
