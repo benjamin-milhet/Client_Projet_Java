@@ -24,22 +24,21 @@ public class Game extends AnimationTimer {
     public static final int SCALE = 3;
     public static final String NAME = "Operation : Ninja";
 
-    private Keyboard keyboard;
-    private Archer archer;
+    private final Keyboard keyboard;
+    private final Archer archer;
     private Entity adversaire;
-    private BarreVie yourLife, adversaireLife;
-    private TimerGfx timerGfx;
+    private final BarreVie yourLife;
+    private BarreVie adversaireLife;
+    private final TimerGfx timerGfx;
 
     private boolean isStarted = false;
 
-    private GraphicsContext graphics;
-    private Client client;
+    private final GraphicsContext graphics;
 
-    public Game(Stage stage) throws Exception {
+    public Game(Stage stage) {
         super();
         Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
-        this.graphics = graphics;
+        this.graphics = canvas.getGraphicsContext2D();
 
         Scene scene = new Scene(new StackPane(canvas), WIDTH* SCALE, HEIGHT* SCALE);
 
@@ -52,7 +51,7 @@ public class Game extends AnimationTimer {
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        this.client = new Client(this);
+        Client client = new Client(this);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class Game extends AnimationTimer {
             this.update();
             try {
                 this.render(graphics);
-            } catch (IOException | InterruptedException e) {}
+            } catch (IOException | InterruptedException ignored) {}
         }
     }
 
@@ -90,10 +89,6 @@ public class Game extends AnimationTimer {
         this.adversaireLife.render(graphics);
 
         this.timerGfx.render(graphics);
-    }
-
-    public Archer getArcher() {
-        return archer;
     }
 
     public void addAdversaire(String adversaire) {
