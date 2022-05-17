@@ -1,4 +1,4 @@
-package projet_client.client_projet_java.modeles;
+package projet_client.client_projet_java.modeles.entity;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -10,17 +10,12 @@ import static projet_client.client_projet_java.Game.SCALE;
 
 public class Fleche extends Entity {
 
-    private int speed;
-    private boolean isMooving;
-    private String direction;
     private int scale = 3;
-    private int life;
 
     private float compteurFleche;
     private int compteurYPrime;
 
     private Image[] fleche;
-    private Keyboard keyboard;
 
     public Fleche(int speed, int x, int y, Keyboard keyboard, String direction) {
         this.speed = speed;
@@ -33,7 +28,7 @@ public class Fleche extends Entity {
         this.keyboard = keyboard;
 
         this.fleche = new Image[2];
-        this.getArcherImages();
+        this.getImages();
 
         this.compteurFleche = 0;
         this.compteurYPrime = 0;
@@ -65,9 +60,9 @@ public class Fleche extends Entity {
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
-            this.isMooving = true;
+            //this.isMooving = true;
         } else {
-            this.isMooving = false;
+            //this.isMooving = false;
         }
     }
 
@@ -94,7 +89,8 @@ public class Fleche extends Entity {
         return res;
     }
 
-    public void getArcherImages(){
+    @Override
+    public void getImages(){
         try {
             for (int i = 0; i < this.fleche.length; i++) {
                 Sprite fleche = new Sprite("/fleche/tile00" + i + ".png", 24, 5);
@@ -106,7 +102,13 @@ public class Fleche extends Entity {
         }
     }
 
+    @Override
     public int getLife(){
         return this.life;
+    }
+
+    @Override
+    public int getLifeMax() {
+        return 0;
     }
 }

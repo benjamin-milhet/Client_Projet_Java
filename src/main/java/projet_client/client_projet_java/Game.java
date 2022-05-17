@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
-import projet_client.client_projet_java.modeles.Archer;
-import projet_client.client_projet_java.modeles.BarreVie;
-import projet_client.client_projet_java.modeles.Entity;
-import projet_client.client_projet_java.modeles.TimerGfx;
+import projet_client.client_projet_java.modeles.*;
+import projet_client.client_projet_java.modeles.entity.Archer;
+import projet_client.client_projet_java.modeles.entity.Entity;
+import projet_client.client_projet_java.modeles.entity.FabriqueEntity;
 import projet_client.client_projet_java.network.Client;
 
 import java.io.IOException;
@@ -25,7 +25,8 @@ public class Game extends AnimationTimer {
     public static final String NAME = "Operation : Ninja";
 
     private Keyboard keyboard;
-    private Archer archer, adversaire;
+    private Archer archer;
+    private Entity adversaire;
     private BarreVie yourLife, adversaireLife;
     private TimerGfx timerGfx;
 
@@ -47,7 +48,7 @@ public class Game extends AnimationTimer {
         stage.show();
 
         this.keyboard = new Keyboard(scene);
-        this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
+        this.archer = (Archer) FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
@@ -95,9 +96,11 @@ public class Game extends AnimationTimer {
         return archer;
     }
 
-    public void addAdversaire(Entity adversaire) {
+    public void addAdversaire(String adversaire) {
         System.out.println("addAdversaire");
-        this.adversaire = (Archer) adversaire;
+
+        this.adversaire = FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
+
         this.adversaireLife = new BarreVie(this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
         this.isStarted = true;
     }

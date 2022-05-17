@@ -1,4 +1,4 @@
-package projet_client.client_projet_java.modeles;
+package projet_client.client_projet_java.modeles.entity;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -9,23 +9,15 @@ import java.util.ArrayList;
 
 import static projet_client.client_projet_java.Game.SCALE;
 
-public class Archer extends Entity{
-
-    private String name;
-    private int speed;
-    private boolean isMooving;
-    private int life;
-    private int lifeMax;
-    private String direction;
+public class Archer extends Entity {
 
     private float compteurIdle;
     private float compteurAttack;
-    private float compteurjump;
+    private float compteurJump;
     private float compteurRun;
 
     private Image[] idle, attack, jump, run, dead;
 
-    private Keyboard keyboard;
     private ArrayList<Fleche> fleches;
 
     public Archer(String name, int speed, int x, int y, int life, Keyboard keyboard) {
@@ -44,11 +36,11 @@ public class Archer extends Entity{
         this.jump = new Image[4];
         this.run = new Image[8];
 
-        this.getArcherImages();
+        this.getImages();
 
         this.compteurIdle = 0;
         this.compteurAttack = 0;
-        this.compteurjump = 0;
+        this.compteurJump = 0;
         this.compteurRun = 0;
 
         this.fleches = new ArrayList<>();
@@ -81,20 +73,20 @@ public class Archer extends Entity{
         int yPrime = 0;
 
 
-        if(this.compteurjump < 0.5){
+        if(this.compteurJump < 0.5){
             if (this.y < (225 * SCALE)){
                 this.y = (225 * SCALE);
             }
         }
 
-        if(this.compteurjump == 0 && this.compteurAttack == 0 && this.y == (225 * SCALE)){
+        if(this.compteurJump == 0 && this.compteurAttack == 0 && this.y == (225 * SCALE)){
 
             this.direction = "idle";
 
             if (this.keyboard.getUp().isPressed()) {
                 yPrime = -(3 * SCALE);
                 this.direction = "up";
-                this.compteurjump = 0;
+                this.compteurJump = 0;
             }
 
             if (this.keyboard.getDown().isPressed()) {
@@ -115,9 +107,9 @@ public class Archer extends Entity{
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
-            this.isMooving = true;
+            //this.isMooving = true;
         } else {
-            this.isMooving = false;
+            //this.isMooving = false;
         }
     }
 
@@ -164,11 +156,11 @@ public class Archer extends Entity{
                 }
 
             } else if (this.direction == "up") {
-                archerSprite = this.jump[Math.round(this.compteurjump)];
+                archerSprite = this.jump[Math.round(this.compteurJump)];
 
-                this.compteurjump += 0.5;
-                if(this.compteurjump >= 3){
-                    this.compteurjump = 0;
+                this.compteurJump += 0.5;
+                if(this.compteurJump >= 3){
+                    this.compteurJump = 0;
                     this.direction = "idle";
 
                 }
@@ -193,15 +185,18 @@ public class Archer extends Entity{
         return name;
     }
 
+    @Override
     public int getLife() {
         return this.life;
     }
 
+    @Override
     public int getLifeMax() {
         return this.lifeMax;
     }
 
-    public void getArcherImages(){
+    @Override
+    public void getImages(){
         Sprite archer;
         try {
             for (int i = 0; i < this.idle.length; i++) {

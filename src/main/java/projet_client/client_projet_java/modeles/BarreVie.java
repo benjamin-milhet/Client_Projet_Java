@@ -7,7 +7,7 @@ import java.awt.desktop.SystemSleepEvent;
 
 import static projet_client.client_projet_java.Game.SCALE;
 
-public class BarreVie extends Entity{
+public class BarreVie extends Objet{
 
     private int vie;
     private int vieMax;
@@ -44,10 +44,5 @@ public class BarreVie extends Entity{
         } else if(this.position.equals("gauche")){
             graphics.fillRoundRect(this.x + 100 + (1 * SCALE), this.y + (1.5 * SCALE), this.vie * SCALE, 12 * SCALE, 20, 20);
         }
-    }
-
-    @Override
-    public boolean gestionCollision(int x, int y) {
-        return false;
     }
 }

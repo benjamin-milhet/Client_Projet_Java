@@ -2,12 +2,9 @@ package projet_client.client_projet_java.network;
 
 import projet_client.client_projet_java.Game;
 import projet_client.client_projet_java.input.Keyboard;
-import projet_client.client_projet_java.modeles.Archer;
 
 import java.net.*;
 import java.io.*;
-
-import static projet_client.client_projet_java.Game.SCALE;
 
 public class Client{
 
@@ -23,7 +20,7 @@ public class Client{
             this.game = game;
             this.bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-            this.game.addAdversaire(new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, keyboard));
+            this.game.addAdversaire("Archer");
         } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
         }
