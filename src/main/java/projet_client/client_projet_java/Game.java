@@ -52,7 +52,7 @@ public class Game extends AnimationTimer {
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        this.client = new Client(this, this.keyboard);
+        this.client = new Client(this);
     }
 
     @Override
