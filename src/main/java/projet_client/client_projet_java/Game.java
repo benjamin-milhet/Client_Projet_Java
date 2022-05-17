@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
-import projet_client.client_projet_java.modeles.Archer;
-import projet_client.client_projet_java.modeles.BarreVie;
-import projet_client.client_projet_java.modeles.Entity;
-import projet_client.client_projet_java.modeles.TimerGfx;
+import projet_client.client_projet_java.modeles.*;
+import projet_client.client_projet_java.modeles.entity.Archer;
+import projet_client.client_projet_java.modeles.entity.Entity;
+import projet_client.client_projet_java.modeles.entity.FabriqueEntity;
 import projet_client.client_projet_java.network.Client;
 
 import java.io.IOException;
@@ -24,21 +24,21 @@ public class Game extends AnimationTimer {
     public static final int SCALE = 3;
     public static final String NAME = "Operation : Ninja";
 
-    private Keyboard keyboard;
-    private Archer archer, adversaire;
-    private BarreVie yourLife, adversaireLife;
-    private TimerGfx timerGfx;
+    private final Keyboard keyboard;
+    private final Archer archer;
+    private Entity adversaire;
+    private final BarreVie yourLife;
+    private BarreVie adversaireLife;
+    private final TimerGfx timerGfx;
 
     private boolean isStarted = false;
 
-    private GraphicsContext graphics;
-    private Client client;
+    private final GraphicsContext graphics;
 
-    public Game(Stage stage) throws Exception {
+    public Game(Stage stage) {
         super();
         Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
-        GraphicsContext graphics = canvas.getGraphicsContext2D();
-        this.graphics = graphics;
+        this.graphics = canvas.getGraphicsContext2D();
 
         Scene scene = new Scene(new StackPane(canvas), WIDTH* SCALE, HEIGHT* SCALE);
 
@@ -47,11 +47,11 @@ public class Game extends AnimationTimer {
         stage.show();
 
         this.keyboard = new Keyboard(scene);
-        this.archer = new Archer("archer", 10, 50 * SCALE,225 * SCALE,100, this.keyboard);
+        this.archer = (Archer) FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
         this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        this.client = new Client(this, this.keyboard);
+        Client client = new Client(this);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class Game extends AnimationTimer {
             this.update();
             try {
                 this.render(graphics);
-            } catch (IOException | InterruptedException e) {}
+            } catch (IOException | InterruptedException ignored) {}
         }
     }
 
@@ -91,13 +91,11 @@ public class Game extends AnimationTimer {
         this.timerGfx.render(graphics);
     }
 
-    public Archer getArcher() {
-        return archer;
-    }
-
-    public void addAdversaire(Entity adversaire) {
+    public void addAdversaire(String adversaire) {
         System.out.println("addAdversaire");
-        this.adversaire = (Archer) adversaire;
+
+        this.adversaire = FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
+
         this.adversaireLife = new BarreVie(this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
         this.isStarted = true;
     }
