@@ -16,7 +16,7 @@ public class Archer extends Entity {
     private float compteurJump;
     private float compteurRun;
 
-    private Image[] idle, attack, jump, run, dead;
+    private final Image[] idle, attack, jump, run;
 
     private ArrayList<Fleche> fleches;
 
@@ -65,8 +65,8 @@ public class Archer extends Entity {
         }
         this.fleches = lastFleches;
 
-        for (int i = 0; i < this.fleches.size(); i++) {
-            this.fleches.get(i).update();
+        for (Fleche fleche : this.fleches) {
+            fleche.update();
         }
 
         int xPrime = 0;
@@ -107,20 +107,17 @@ public class Archer extends Entity {
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
-            //this.isMooving = true;
-        } else {
-            //this.isMooving = false;
         }
     }
 
     @Override
     public void render(GraphicsContext graphics){
-        for (int i = 0; i < this.fleches.size(); i++) {
-            this.fleches.get(i).render(graphics);
+        for (Fleche fleche : this.fleches) {
+            fleche.render(graphics);
         }
 
         Image archerSprite = this.idle[0];
-        if (this.direction == "idle") {
+        if (this.direction.equals("idle")) {
             archerSprite = this.idle[Math.round(this.compteurIdle)];
 
             this.compteurIdle += 0.5;
@@ -128,44 +125,34 @@ public class Archer extends Entity {
                 this.compteurIdle = 0;
             }
         } else {
-            if (this.direction == "down") {
-                archerSprite = this.attack[Math.round(this.compteurAttack)];
+            switch (this.direction) {
+                case "down" -> {
+                    archerSprite = this.attack[Math.round(this.compteurAttack)];
+                    this.compteurAttack += 0.5;
+                    if (this.compteurAttack >= 5) {
+                        this.compteurAttack = 0;
+                        this.direction = "idle";
 
-                this.compteurAttack += 0.5;
-                if(this.compteurAttack >= 5){
-                    this.compteurAttack = 0;
-                    this.direction = "idle";
-
-                    this.lancerFleche();
+                        this.lancerFleche();
+                    }
                 }
-
-            } else if (this.direction == "right") {
-                archerSprite = this.run[Math.round(this.compteurRun)];
-
-                this.compteurRun += 0.5;
-                if(this.compteurRun >= 7){
-                    this.compteurRun = 0;
+                case "right", "left" -> {
+                    archerSprite = this.run[Math.round(this.compteurRun)];
+                    this.compteurRun += 0.5;
+                    if (this.compteurRun >= 7) {
+                        this.compteurRun = 0;
+                    }
                 }
+                case "up" -> {
+                    archerSprite = this.jump[Math.round(this.compteurJump)];
+                    this.compteurJump += 0.5;
+                    if (this.compteurJump >= 3) {
+                        this.compteurJump = 0;
+                        this.direction = "idle";
 
-            } else if (this.direction == "left") {
-                archerSprite = this.run[Math.round(this.compteurRun)];
-
-                this.compteurRun += 0.5;
-                if(this.compteurRun >= 7){
-                    this.compteurRun = 0;
+                    }
+                    this.keyboard.getUp().setPressed(false);
                 }
-
-            } else if (this.direction == "up") {
-                archerSprite = this.jump[Math.round(this.compteurJump)];
-
-                this.compteurJump += 0.5;
-                if(this.compteurJump >= 3){
-                    this.compteurJump = 0;
-                    this.direction = "idle";
-
-                }
-                this.keyboard.getUp().setPressed(false);
-
             }
         }
         graphics.drawImage(archerSprite, this.x, this.y, archerSprite.getWidth(), archerSprite.getHeight());
@@ -179,10 +166,6 @@ public class Archer extends Entity {
     public void lancerFleche(){
         Fleche fleche = new Fleche(4, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
         this.fleches.add(fleche);
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override
