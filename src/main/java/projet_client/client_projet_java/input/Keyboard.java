@@ -1,60 +1,32 @@
 package projet_client.client_projet_java.input;
 
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
-import java.util.ArrayList;
 
 public class Keyboard {
-
-    private ArrayList<Key> keys;
-    private Key up;
-    private Key down;
-    private Key left;
-    private Key right;
+    private final Key up;
+    private final Key down;
+    private final Key left;
+    private final Key right;
 
     public Keyboard(Scene scene) {
-        this.keys = new ArrayList<>();
-
         this.up = new Key();
         this.down = new Key();
         this.left = new Key();
         this.right = new Key();
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                pressedOnKey(event.getCode(), true);
-            }
-        });
+        scene.setOnKeyPressed(event -> pressedOnKey(event.getCode(), true));
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                pressedOnKey(event.getCode(), false);
-            }
-        });
+        scene.setOnKeyReleased(event -> pressedOnKey(event.getCode(), false));
     }
 
 
     public void pressedOnKey(KeyCode keyCode, boolean isPressed) {
         switch (keyCode) {
-            case W:
-            case Z:
-                this.up.setPressed(isPressed);
-                break;
-            case S:
-                this.down.setPressed(isPressed);
-                break;
-            case A:
-            case Q:
-                this.left.setPressed(isPressed);
-                break;
-            case D:
-                this.right.setPressed(isPressed);
-                break;
+            case W, Z -> this.up.setPressed(isPressed);
+            case S -> this.down.setPressed(isPressed);
+            case A, Q -> this.left.setPressed(isPressed);
+            case D -> this.right.setPressed(isPressed);
         }
     }
 
