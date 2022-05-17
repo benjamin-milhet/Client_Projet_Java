@@ -9,13 +9,10 @@ import static projet_client.client_projet_java.Game.SCALE;
 
 
 public class Fleche extends Entity {
-
-    private int scale = 3;
-
     private float compteurFleche;
     private int compteurYPrime;
 
-    private Image[] fleche;
+    private final Image[] fleche;
 
     public Fleche(int speed, int x, int y, Keyboard keyboard, String direction) {
         this.speed = speed;
@@ -49,7 +46,7 @@ public class Fleche extends Entity {
         int yPrime = 0;
 
         if(this.direction.equals("right")){
-            xPrime = 1 * this.speed;
+            xPrime = this.speed;
             this.compteurYPrime++;
             if (this.compteurYPrime >= 3) {
                 this.compteurYPrime = 0;
@@ -60,9 +57,6 @@ public class Fleche extends Entity {
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
-            //this.isMooving = true;
-        } else {
-            //this.isMooving = false;
         }
     }
 
