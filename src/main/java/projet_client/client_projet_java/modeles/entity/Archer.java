@@ -2,6 +2,7 @@ package projet_client.client_projet_java.modeles.entity;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import projet_client.client_projet_java.Game;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
@@ -20,7 +21,11 @@ public class Archer extends Entity {
 
     private ArrayList<Fleche> fleches;
 
-    public Archer(String name, int speed, int x, int y, int life, Keyboard keyboard) {
+    private final String position;
+    private final Game game;
+
+    public Archer(Game game, String name, int speed, int x, int y, int life, Keyboard keyboard, String position) {
+        this.game = game;
         this.name = name;
         this.speed = speed;
         this.x = x;
@@ -28,6 +33,7 @@ public class Archer extends Entity {
         this.life = life;
         this.lifeMax = life;
         this.direction = "idle";
+        this.position = position;
 
         this.keyboard = keyboard;
 
@@ -48,8 +54,14 @@ public class Archer extends Entity {
 
     public void move(int x, int y) {
         if (!(x != 0 && y != 0)) { // Permet de ne pas se deplacer en diagonal
-            if(!this.gestionCollision(x,y)){
-                this.x += x * this.speed;
+            if(this.gestionCollision(x, y)){
+                if (this.position.equals("droite")){
+                    if (this.getX() + (40*SCALE) <= this.game.getAdversaire().getX()) this.x += x * this.speed;
+                    else this.x--;
+                } else {
+                    if (this.getX() - (40*SCALE) >= this.game.getArcher().getX()) this.x += x * this.speed;
+                    else this.x++;
+                }
                 this.y += y * this.speed;
             }
         }
@@ -82,32 +94,57 @@ public class Archer extends Entity {
         if(this.compteurJump == 0 && this.compteurAttack == 0 && this.y == (225 * SCALE)){
 
             this.direction = "idle";
+            if (this.position.equals("droite")) {
+                if (this.keyboard.getUpPlayer1().isPressed()) {
+                    yPrime = -(3 * SCALE);
+                    this.direction = "up";
+                    this.compteurJump = 0;
+                }
 
-            if (this.keyboard.getUp().isPressed()) {
-                yPrime = -(3 * SCALE);
-                this.direction = "up";
-                this.compteurJump = 0;
+                if (this.keyboard.getDownPlayer1().isPressed()) {
+                    this.direction = "down";
+                    this.compteurAttack = 0;
+                }
+
+                if (this.keyboard.getLeftPlayer1().isPressed()) {
+                    xPrime--;
+                    this.direction = "left";
+                }
+
+                if (this.keyboard.getRightPlayer1().isPressed()) {
+                    xPrime++;
+                    this.direction = "right";
+                }
+            } else {
+                if (this.keyboard.getUpPlayer2().isPressed()) {
+                    yPrime = -(3 * SCALE);
+                    this.direction = "up";
+                    this.compteurJump = 0;
+                }
+
+                if (this.keyboard.getDownPlayer2().isPressed()) {
+                    this.direction = "down";
+                    this.compteurAttack = 0;
+                }
+
+                if (this.keyboard.getLeftPlayer2().isPressed()) {
+                    xPrime--;
+                    this.direction = "left";
+                }
+
+                if (this.keyboard.getRightPlayer2().isPressed()) {
+                    xPrime++;
+                    this.direction = "right";
+                }
             }
 
-            if (this.keyboard.getDown().isPressed()) {
-                this.direction = "down";
-                this.compteurAttack = 0;
-            }
-
-            if (this.keyboard.getLeft().isPressed()) {
-                xPrime--;
-                this.direction = "left";
-            }
-
-            if (this.keyboard.getRight().isPressed()) {
-                xPrime++;
-                this.direction = "right";
-            }
         }
 
         if (xPrime != 0 || yPrime != 0) {
             move(xPrime, yPrime);
         }
+
+        this.gestionCollision(0, 0);
     }
 
     @Override
@@ -151,7 +188,8 @@ public class Archer extends Entity {
                         this.direction = "idle";
 
                     }
-                    this.keyboard.getUp().setPressed(false);
+                    if (this.position.equals("droite")) this.keyboard.getUpPlayer1().setPressed(false);
+                    else  this.keyboard.getUpPlayer2().setPressed(false);
                 }
             }
         }
@@ -160,11 +198,30 @@ public class Archer extends Entity {
 
     @Override
     public boolean gestionCollision(int x, int y) {
-        return false;
+        if (this.position.equals("droite")) {
+            for (Fleche fleche : this.game.getAdversaire().getFleches()) {
+                if (this.getX() + (60 * SCALE) >= fleche.getX()) {
+                    this.life -=20;
+                    this.game.getAdversaire().getFleches().remove(fleche);
+                }
+            }
+        } else {
+            for (Fleche fleche : this.game.getArcher().getFleches()) {
+                if (this.getX() + (20 * SCALE) <= fleche.getX()) {
+                    this.game.getArcher().getFleches().remove(fleche);
+                    this.life -=20;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void lancerFleche(){
-        Fleche fleche = new Fleche(4, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "right");
+        Fleche fleche;
+        if (this.position.equals("droite")) fleche = new Fleche(4, this.x + (60 * SCALE), this.y + (40 * SCALE), this.keyboard, "droite");
+        else fleche = new Fleche(4, this.x + (20 * SCALE), this.y + (40 * SCALE), this.keyboard, "gauche");
+
         this.fleches.add(fleche);
     }
 
@@ -182,27 +239,48 @@ public class Archer extends Entity {
     public void getImages(){
         Sprite archer;
         try {
-            for (int i = 0; i < this.idle.length; i++) {
-                archer = new Sprite("/archer/idle/tile00" + i + ".png", 100, 100);
-                this.idle[i] = archer.getImage();
+            if (this.position.equals("droite")) {
+                for (int i = 0; i < this.idle.length; i++) {
+                    archer = new Sprite("/archer/droite/idle/tile00" + i + ".png", 100, 100);
+                    this.idle[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.attack.length; i++) {
+                    archer = new Sprite("/archer/droite/attack/tile00" + i + ".png", 100, 100);
+                    this.attack[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.jump.length; i++) {
+                    archer = new Sprite("/archer/droite/jump/tile00" + i + ".png", 100, 100);
+                    this.jump[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.run.length; i++) {
+                    archer = new Sprite("/archer/droite/run/tile00" + i + ".png", 100, 100);
+                    this.run[i] = archer.getImage();
+                }
+            } else {
+                for (int i = 0; i < this.idle.length; i++) {
+                    archer = new Sprite("/archer/gauche/idle/tile00" + i + ".png", 100, 100);
+                    this.idle[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.attack.length; i++) {
+                    archer = new Sprite("/archer/gauche/attack/tile00" + i + ".png", 100, 100);
+                    this.attack[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.jump.length; i++) {
+                    archer = new Sprite("/archer/gauche/jump/tile00" + i + ".png", 100, 100);
+                    this.jump[i] = archer.getImage();
+                }
+                for (int i = 0; i < this.run.length; i++) {
+                    archer = new Sprite("/archer/gauche/run/tile00" + i + ".png", 100, 100);
+                    this.run[i] = archer.getImage();
+                }
             }
-            for (int i = 0; i < this.attack.length; i++) {
-                archer = new Sprite("/archer/attack/tile00" + i + ".png", 100, 100);
-                this.attack[i] = archer.getImage();
-            }
-            for (int i = 0; i < this.jump.length; i++) {
-                archer = new Sprite("/archer/jump/tile00" + i + ".png", 100, 100);
-                this.jump[i] = archer.getImage();
-            }
-            for (int i = 0; i < this.run.length; i++) {
-                archer = new Sprite("/archer/run/tile00" + i + ".png", 100, 100);
-                this.run[i] = archer.getImage();
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erreur lors du chargement des images de l'archer");
         }
     }
 
+    public ArrayList<Fleche> getFleches() {
+        return fleches;
+    }
 }

@@ -33,11 +33,12 @@ public class Fleche extends Entity {
 
     public void move(int x, int y) {
 
-        if(!this.gestionCollision(x,y)){
+        if (this.direction.equals("gauche")) x = -x;
+
+        if(this.gestionCollision(x, y)){
             this.x += x * this.speed;
             this.y += y * this.speed;
         }
-
     }
 
     @Override
@@ -45,14 +46,11 @@ public class Fleche extends Entity {
         int xPrime = 0;
         int yPrime = 0;
 
-        if(this.direction.equals("right")){
-            xPrime = this.speed;
-            this.compteurYPrime++;
-            if (this.compteurYPrime >= 3) {
-                this.compteurYPrime = 0;
-                yPrime ++;
-            }
-
+        xPrime = this.speed;
+        this.compteurYPrime++;
+        if (this.compteurYPrime >= 3) {
+            this.compteurYPrime = 0;
+            yPrime ++;
         }
 
         if (xPrime != 0 || yPrime != 0) {
@@ -75,21 +73,28 @@ public class Fleche extends Entity {
     public boolean gestionCollision(int x, int y) {
         boolean res = false;
         if(this.x + x < 0 || this.x + x > (600 * SCALE) || this.y + y < 0 || this.y + y > (290 * SCALE)){
-            System.out.println("Collision avec la map");
             this.compteurYPrime = 0;
             res = true;
             this.life--;
         }
-        return res;
+        return !res;
     }
 
     @Override
     public void getImages(){
         try {
-            for (int i = 0; i < this.fleche.length; i++) {
-                Sprite fleche = new Sprite("/fleche/tile00" + i + ".png", 24, 5);
-                this.fleche[i] = fleche.getImage();
+            if (this.direction.equals("droite")) {
+                for (int i = 0; i < this.fleche.length; i++) {
+                    Sprite fleche = new Sprite("/fleche/droite/tile00" + i + ".png", 24, 5);
+                    this.fleche[i] = fleche.getImage();
+                }
+            } else {
+                for (int i = 0; i < this.fleche.length; i++) {
+                    Sprite fleche = new Sprite("/fleche/gauche/tile00" + i + ".png", 24, 5);
+                    this.fleche[i] = fleche.getImage();
+                }
             }
+
 
         } catch (Exception e) {
             System.out.println("Erreur lors du chargement des images de l'archer");

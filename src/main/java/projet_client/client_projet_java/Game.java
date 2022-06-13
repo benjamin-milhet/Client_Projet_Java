@@ -13,7 +13,6 @@ import projet_client.client_projet_java.modeles.*;
 import projet_client.client_projet_java.modeles.entity.Archer;
 import projet_client.client_projet_java.modeles.entity.Entity;
 import projet_client.client_projet_java.modeles.entity.FabriqueEntity;
-import projet_client.client_projet_java.network.Client;
 
 import java.io.IOException;
 
@@ -26,7 +25,7 @@ public class Game extends AnimationTimer {
 
     private final Keyboard keyboard;
     private final Archer archer;
-    private Entity adversaire;
+    private Archer adversaire;
     private final BarreVie yourLife;
     private BarreVie adversaireLife;
     private final TimerGfx timerGfx;
@@ -47,11 +46,21 @@ public class Game extends AnimationTimer {
         stage.show();
 
         this.keyboard = new Keyboard(scene);
-        this.archer = (Archer) FabriqueEntity.fabrique("Archer", 10, 50,225,100, this.keyboard);
-        this.yourLife = new BarreVie(this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
+        this.archer = (Archer) FabriqueEntity.fabrique(this, "Archer", 10, 50,225,100, this.keyboard, "droite");
+        assert this.archer != null;
+        this.yourLife = new BarreVie(this, this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        Client client = new Client(this);
+        this.addAdversaire("Archer");
+        //Client client = new Client(this);
+    }
+
+    public Archer getArcher() {
+        return archer;
+    }
+
+    public Archer getAdversaire() {
+        return adversaire;
     }
 
     @Override
@@ -70,11 +79,9 @@ public class Game extends AnimationTimer {
 
     public void update() {
         this.archer.update();
-        /*try {
-            this.client.sendMessage(this.archer.getX() + "");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
+        this.adversaire.update();
+        this.yourLife.update();
+        this.adversaireLife.update();
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
@@ -94,12 +101,13 @@ public class Game extends AnimationTimer {
     }
 
     public void addAdversaire(String adversaire) {
-        System.out.println("addAdversaire");
+        this.adversaire = (Archer) FabriqueEntity.fabrique(this, adversaire, 10, 450,225,100, this.keyboard, "gauche");
 
-        this.adversaire = FabriqueEntity.fabrique(adversaire, 10, 450,225,100, this.keyboard);
-
-        this.adversaireLife = new BarreVie(this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
+        assert this.adversaire != null;
+        this.adversaireLife = new BarreVie(this, this.adversaire.getLife(), this.adversaire.getLifeMax(), 850, 100, "gauche");
         this.isStarted = true;
     }
+
+
 }
 
