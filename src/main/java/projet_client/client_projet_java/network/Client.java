@@ -17,7 +17,7 @@ public class Client{
             this.socket = new Socket("localhost", 8080); // Permet de se connecter à un serveur distant sur le port 8080
             this.bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
-            game.addAdversaire("Archer");
+            //game.addAdversaire("Archer");
         } catch (IOException e) {
                 closeEverything(socket, bufferedReader, bufferedWriter);
         }

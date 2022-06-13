@@ -15,5 +15,4 @@ public abstract class Objet {
     public int getY() {
         return y;
     }
-
 }
