@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet_client.client_projet_java.menu.Menu">
+   <children>
+      <ImageView fitHeight="481.0" fitWidth="739.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Background.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="313.0" layoutY="310.0" mnemonicParsing="false" onAction="#startGame" prefHeight="26.0" prefWidth="116.0" text="Jouer" textFill="#0a680f">
+         <font>
+            <Font name="Courier New" size="14.0" />
+         </font>
+      </Button>
+      <TextField fx:id="fieldJ1" layoutX="100.0" layoutY="195.0" />
+      <TextField fx:id="fieldJ2" layoutX="482.0" layoutY="195.0" />
+      <Label layoutX="136.0" layoutY="163.0" text="Joueur 1" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="519.0" layoutY="163.0" text="Joueur 2" textFill="WHITE">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="313.0" layoutY="363.0" mnemonicParsing="false" onAction="#afficherHistorique" prefHeight="26.0" prefWidth="116.0" text="Historique" textFill="#0a680f">
+         <font>
+            <Font name="Courier New" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

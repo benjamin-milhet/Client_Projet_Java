@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projet_client.client_projet_java.menu.Historique">
+<children>
+    <ImageView fitHeight="481.0" fitWidth="739.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../Background.png" />
+        </image>
+    </ImageView>
+    <Label layoutX="319.0" layoutY="43.0" text="Historique" textFill="WHITE">
+        <font>
+            <Font name="Arial Black" size="18.0" />
+        </font>
+    </Label>
+    <Button fx:id="btnMenu" layoutX="313.0" layoutY="363.0" mnemonicParsing="false" onAction="#retourMenu" prefHeight="26.0" prefWidth="116.0" text="Menu" textFill="#0a680f">
+        <font>
+            <Font name="Courier New" size="14.0" />
+        </font>
+    </Button>
+    <ListView fx:id="listScore" layoutX="136.0" layoutY="94.0" prefHeight="240.0" prefWidth="468.0" />
+</children>
+</AnchorPane>

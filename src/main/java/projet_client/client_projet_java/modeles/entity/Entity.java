@@ -15,4 +15,7 @@ public abstract class Entity extends Objet {
     public abstract void getImages();
     public abstract boolean gestionCollision(int x, int y);
 
+    public String getName() {
+        return name;
+    }
 }

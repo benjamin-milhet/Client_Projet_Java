@@ -7,6 +7,7 @@ import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static projet_client.client_projet_java.Game.SCALE;
 
@@ -199,17 +200,19 @@ public class Archer extends Entity {
     @Override
     public boolean gestionCollision(int x, int y) {
         if (this.position.equals("droite")) {
-            for (Fleche fleche : this.game.getAdversaire().getFleches()) {
-                if (this.getX() + (60 * SCALE) >= fleche.getX()) {
+            Iterator<Fleche> iteratorFlecheAdversaire = this.game.getAdversaire().getFleches().iterator();
+            while (iteratorFlecheAdversaire.hasNext()) {
+                if (this.getX() + (60 * SCALE) >= iteratorFlecheAdversaire.next().getX()) {
                     this.life -=20;
-                    this.game.getAdversaire().getFleches().remove(fleche);
+                    iteratorFlecheAdversaire.remove();
                 }
             }
         } else {
-            for (Fleche fleche : this.game.getArcher().getFleches()) {
-                if (this.getX() + (20 * SCALE) <= fleche.getX()) {
-                    this.game.getArcher().getFleches().remove(fleche);
+            Iterator<Fleche> iteratorFlecheArcher = this.game.getArcher().getFleches().iterator();
+            while (iteratorFlecheArcher.hasNext()) {
+                if (this.getX() + (20 * SCALE) <= iteratorFlecheArcher.next().getX()) {
                     this.life -=20;
+                    iteratorFlecheArcher.remove();
                 }
             }
         }
@@ -283,4 +286,6 @@ public class Archer extends Entity {
     public ArrayList<Fleche> getFleches() {
         return fleches;
     }
+
+
 }

@@ -6,12 +6,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
+import projet_client.client_projet_java.fichier.GestionFichier;
 import projet_client.client_projet_java.graphics.Sprite;
 import projet_client.client_projet_java.input.Keyboard;
-import projet_client.client_projet_java.modeles.*;
+import projet_client.client_projet_java.modeles.BarreVie;
+import projet_client.client_projet_java.modeles.TimerGfx;
 import projet_client.client_projet_java.modeles.entity.Archer;
-import projet_client.client_projet_java.modeles.entity.Entity;
 import projet_client.client_projet_java.modeles.entity.FabriqueEntity;
 
 import java.io.IOException;
@@ -34,8 +34,14 @@ public class Game extends AnimationTimer {
 
     private final GraphicsContext graphics;
 
-    public Game(Stage stage) {
+    private final Stage stage;
+
+    private boolean isGameFinish;
+
+    public Game(Stage stage, String joueur1, String joueur2) {
         super();
+        this.stage = stage;
+        this.isGameFinish = false;
         Canvas canvas = new Canvas(WIDTH * SCALE, HEIGHT * SCALE);
         this.graphics = canvas.getGraphicsContext2D();
 
@@ -46,13 +52,12 @@ public class Game extends AnimationTimer {
         stage.show();
 
         this.keyboard = new Keyboard(scene);
-        this.archer = (Archer) FabriqueEntity.fabrique(this, "Archer", 10, 50,225,100, this.keyboard, "droite");
+        this.archer = (Archer) FabriqueEntity.fabrique(this, joueur1, 10, 50,225,100, this.keyboard, "droite");
         assert this.archer != null;
         this.yourLife = new BarreVie(this, this.archer.getLife(), this.archer.getLifeMax(), 850, 100, "droite");
         this.timerGfx = new TimerGfx(850, 80);
 
-        this.addAdversaire("Archer");
-        //Client client = new Client(this);
+        this.addAdversaire(joueur2);
     }
 
     public Archer getArcher() {
@@ -82,6 +87,8 @@ public class Game extends AnimationTimer {
         this.adversaire.update();
         this.yourLife.update();
         this.adversaireLife.update();
+
+        if(!this.isGameFinish) this.conditionVictoire();
     }
 
     public void render(GraphicsContext graphics) throws IOException, InterruptedException {
@@ -108,6 +115,27 @@ public class Game extends AnimationTimer {
         this.isStarted = true;
     }
 
+    private void conditionVictoire() {
+        boolean res = false;
+
+        if (this.archer.getLife() <= 0) {
+            this.isGameFinish = true;
+            try {
+                GestionFichier.write("Score.txt", this.archer.getName() + " vs " + this.adversaire.getName() + " : " + this.adversaire.getName() + " WIN !");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (this.adversaire.getLife() <= 0) {
+            this.isGameFinish = true;
+            try {
+                GestionFichier.write("Score.txt", this.archer.getName() + " vs " + this.adversaire.getName() + " : " + this.archer.getName() + " WIN !");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        if (this.isGameFinish) this.stage.close();
+    }
 
 }
 
